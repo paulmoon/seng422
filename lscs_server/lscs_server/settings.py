@@ -36,8 +36,22 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'server',
+    'rest_framework.authtoken',
+    'corsheaders',
+    'debug_toolbar',
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'TEST_REQUEST_DEFAULT_FORMAT' : 'json',
+    'TEST_REQUEST_RENDERER_CLASSES' : (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -59,7 +73,7 @@ WSGI_APPLICATION = 'lscs_server.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'lscs.sqlite3'),
     }
 }
 
@@ -76,6 +90,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+AUTH_USER_MODEL = "server.Employee"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
