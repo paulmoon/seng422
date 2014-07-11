@@ -72,7 +72,7 @@ WSGI_APPLICATION = 'lscs_server.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'lscs_server',
 	'USER': 'lscs',
 	'PASSWORD': '101Penguin!',
