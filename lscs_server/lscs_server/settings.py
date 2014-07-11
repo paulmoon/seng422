@@ -73,7 +73,10 @@ WSGI_APPLICATION = 'lscs_server.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'lscs.sqlite3'),
+        'NAME': 'lscs_server',
+	'USER': 'lscs',
+	'PASSWORD': '101Penguin!',
+	'HOST': '198.23.149.106',
     }
 }
 
