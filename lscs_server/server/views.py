@@ -1,8 +1,11 @@
-from django.shortcuts import render, get_object_or_404
-from rest_framework import viewsets
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets, generics
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from models import Employee
 from serializers import EmployeeSerializer
+import server
 
 
 class EmployeeViewSet(viewsets.ViewSet):
