@@ -9,6 +9,17 @@ class EmployeeSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'email', 'password', 'first_name',
                   'last_name', 'role')
 
+    def __init__(self, *args, **kwargs):
+    	fields = kwargs.pop('fields', None)
+
+    	super(serializers.ModelSerializer, self).__init__(*args, **kwargs)
+
+    	if fields:
+    		allowed = set(fields)
+    		existing = set(self.fields.keys())
+    		for field_name in existing - allowed:
+    			self.fields.pop(field_name)
+
     def validate(self, attrs):
         # Ensure that the username and/or email doesn't already exist.
 
@@ -18,7 +29,6 @@ class EmployeeSerializer(serializers.ModelSerializer):
             raise ValidationError("email")
         else:
             return attrs
-
 
 class ChecklistSerializer(serializers.ModelSerializer):
     class Meta:

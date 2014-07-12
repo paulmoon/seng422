@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
 from django.db import models
 
 ROLE = (
@@ -13,6 +15,11 @@ class Employee(AbstractUser):
     role = models.CharField(max_length=1, choices=ROLE)
     REQUIRED_FIELDS = ["email", "password"]
 
+
+@receiver(post_save, sender=Employee)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+	if created:
+		Token.objects.create(user=instance)
 
 class ChecklistTemplate(models.Model):
     title = models.CharField(max_length=100)
