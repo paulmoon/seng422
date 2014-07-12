@@ -1,36 +1,5 @@
-<div class="sticky">  
-  <nav class="top-bar" data-topbar data-options="sticky_on: large">
-    <ul class="title-area">
-      <li class="name">
-        <h1><a href="#"><i class="fi-home"></i> Weather App</a></h1>
-      </li>
-       <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-    </ul>
-
-    <section class="top-bar-section">
-    <ul class="right">
-      <li class="divider"></li>
-      <li><a href="#"><i class="fi-mail"></i> Check List</a></li>
-      <li class="divider"></li>
-      <li class="has-dropdown">
-        <a href="#"><i class="fi-torso-business"></i> Profile</a></a>
-        <ul class="dropdown">
-          <li><a ng-href="#/profile"><i class="fi-widget"></i> Settings</a></li>
-          <li><a ng-href="#"><i class="fi-power"></i> Logout</a></li>
-        </ul>
-      </li>
-    </ul>
-      <!-- Right Nav Section -->
-
-      <!-- Left Nav Section -->
-      <ul class="left">
-      </ul>
-    </section>
-  </nav>
-</div>
-<div class="row">
-</div>
+<div ng-include src="'views/header.html'"></div>
+<div class="row"></div>
 <hr />
 <div class="row">
   <div ng-controller="MainCtrl">
