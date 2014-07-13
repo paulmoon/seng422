@@ -34,6 +34,9 @@ class RegisterEmployeeView(generics.CreateAPIView):
                 username=serializer.init_data["username"],
                 password=serializer.init_data["password"],
                 email=serializer.init_data["email"],
+                first_name=serializer.init_data["first_name"],
+                last_name=serializer.init_data["last_name"],
+                role=serializer.init_data["role"],
             )
             employee.save()
             token, created = Token.objects.get_or_create(user=employee)
