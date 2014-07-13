@@ -11,3 +11,31 @@
 .weather-tabset {
 
 }
+
+.weather-login {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}
+
+.weather-circle img {
+   width: 300px;
+   height: 300px;
+   border: 1px solid #ccc;
+   -webkit-border-radius: 150px;
+   -moz-border-radius: 150px;
+   -ms-border-radius: 150px;
+   -o-border-radius: 150px;
+    border-radius: 150px;
+}
+
+.weather-circle2 img {
+   width: 300px;
+   height: 300px;
+   border: 1px solid #ccc;
+   -webkit-border-radius: 150px;
+   -moz-border-radius: 150px;
+   -ms-border-radius: 150px;
+   -o-border-radius: 150px;
+    border-radius: 150px;
+}
