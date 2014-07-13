@@ -10,6 +10,8 @@ import server
 
 
 class EmployeeViewSet(viewsets.ViewSet):
+    permission_classes = (AllowAny,)
+
     def list(self, request):
         queryset = Employee.objects.all()
         serializer = EmployeeSerializer(queryset, many=True)
@@ -22,21 +24,24 @@ class EmployeeViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
 class RegisterEmployeeView(generics.CreateAPIView):
-	"""
-	This view provides an endpoint for new users to register.
-	"""
-	permission_classes = (AllowAny,)
+    """
+    This view provides an endpoint for new users to register.
+    """
+    permission_classes = (AllowAny,)
 
-	def post(self, request, *args, **kwargs):
-		serializer = EmployeeSerializer(data=request.DATA)
-		if serializer.is_valid():
-			employee = Employee.objects.create_user(
-				username=serializer.init_data["username"],
-				password=serializer.init_data["password"],
-				email=serializer.init_data["email"],
-			)
-			employee.save()
-			token, created = Token.objects.get_or_create(user=employee)
-			return Response(data={'token':token.key}, status=200)
-		else:
-			return Response(status=400)
+    def post(self, request, *args, **kwargs):
+        serializer = EmployeeSerializer(data=request.DATA)
+        if serializer.is_valid():
+            employee = Employee.objects.create_user(
+                username=serializer.init_data["username"],
+                password=serializer.init_data["password"],
+                email=serializer.init_data["email"],
+                first_name=serializer.init_data["first_name"],
+                last_name=serializer.init_data["last_name"],
+                role=serializer.init_data["role"],
+            )
+            employee.save()
+            token, created = Token.objects.get_or_create(user=employee)
+            return Response(data={'token':token.key}, status=200)
+        else:
+            return Response(status=400)
