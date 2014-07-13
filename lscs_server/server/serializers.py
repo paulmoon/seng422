@@ -39,4 +39,6 @@ class ChecklistSerializer(serializers.ModelSerializer):
 class ChecklistTemplateSerializer(serializers.ModelSerializer):
     class Meta:
         model = server.models.ChecklistTemplate
-        fields = ('id', 'title', 'description', 'json_contents')
+        fields = ('id', 'title', 'description', 'json_contents', 'status')
+
+
