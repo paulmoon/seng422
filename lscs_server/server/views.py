@@ -72,7 +72,7 @@ class ChecklistTemplateCreateView(generics.CreateAPIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ChecklistTemplateUpdateView(generics.UpdateAPIView)
+class ChecklistTemplateUpdateView(generics.UpdateAPIView):
     #TODO: Change for Authenication
     authentication_classes = (AllowAny,)
     '''
