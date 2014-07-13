@@ -82,7 +82,7 @@ class ChecklistTemplateUpdateView(generics.UpdateAPIView)
     def put(self, request, *args, **kwargs):
         template = None
         try:
-            template = ChecklistTemplates.objects.get(pk=request.DATA['templateID'])
+            template = ChecklistTemplates.objects.get(pk=request.DATA['id'])
         except KeyError:
             HttpResponseServerError("No template exists with that ID!")
 
@@ -114,7 +114,7 @@ class ChecklistTemplateDeactivateView(generics.DestroyAPIView):
     def delete(self, request, *args, **kwargs):
         template = None
         try:
-            template = ChecklistTemplates.objects.get(pk=request.DATA['templateID'])
+            template = ChecklistTemplates.objects.get(pk=request.DATA['id'])
         except KeyError:
             HttpResponseServerError("No template exists with that ID!")
 
