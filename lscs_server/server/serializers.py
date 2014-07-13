@@ -10,15 +10,15 @@ class EmployeeSerializer(serializers.ModelSerializer):
                   'last_name', 'role')
 
     def __init__(self, *args, **kwargs):
-    	fields = kwargs.pop('fields', None)
+        fields = kwargs.pop('fields', None)
 
-    	super(serializers.ModelSerializer, self).__init__(*args, **kwargs)
+        super(serializers.ModelSerializer, self).__init__(*args, **kwargs)
 
-    	if fields:
-    		allowed = set(fields)
-    		existing = set(self.fields.keys())
-    		for field_name in existing - allowed:
-    			self.fields.pop(field_name)
+        if fields:
+            allowed = set(fields)
+            existing = set(self.fields.keys())
+            for field_name in existing - allowed:
+                self.fields.pop(field_name)
 
     def validate(self, attrs):
         # Ensure that the username and/or email doesn't already exist.

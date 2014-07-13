@@ -18,18 +18,17 @@ class Employee(AbstractUser):
 
 @receiver(post_save, sender=Employee)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
-	if created:
-		Token.objects.create(user=instance)
+    if created:
+        Token.objects.create(user=instance)
 
 class ChecklistTemplate(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     json_contents = models.TextField()
 
-
 class Checklist(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     json_contents = models.TextField()
-    template = models.ForeignKey(ChecklistTemplate, related_name="template")
+    template = models.ForeignKey(ChecklistTemplate, related_name="template", null=True, blank=True)
 

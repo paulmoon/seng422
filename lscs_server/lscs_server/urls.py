@@ -15,4 +15,6 @@ urlpatterns = patterns('',
     url(r'^verify_credentials/?', 'rest_framework.authtoken.views.obtain_auth_token'),
     url(r'^register/', views.RegisterEmployeeView.as_view()),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^checklist/', views.ChecklistView.as_view()),
+    url(r'^checklist/(?P<checklist_id>.+)/$', views.ChecklistView.as_view())
 )
