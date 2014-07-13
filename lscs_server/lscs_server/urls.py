@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     url(r'^register/', views.RegisterEmployeeView.as_view()),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^checklist/', views.ChecklistView.as_view()),
-    url(r'^checklist/(?P<checklist_id>.+)/$', views.ChecklistView.as_view())
+    url(r'^checklist/(?P<checklist_id>.+)/$', views.ChecklistView.as_view()),
     url(r'^template/?$', views.ChecklistTemplateListView.as_view()),
     url(r'^template/?$', views.ChecklistTemplateCreateView.as_view()),
     url(r'^template/(?P<templateID>[0-9]+)/?$', views.ChecklistTemplateUpdateView.as_view()),
