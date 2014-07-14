@@ -5,7 +5,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from models import Employee, ChecklistTemplate, Checklist
-from serializers import EmployeeSerializer, ChecklistSerializer
+from serializers import EmployeeSerializer, ChecklistSerializer, EmployeeInfoSerializer
 import server
 
 
@@ -44,6 +44,16 @@ class RegisterEmployeeView(generics.CreateAPIView):
             return Response(data={'token':token.key}, status=200)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+class UserInformationView(generics.RetrieveAPIView):
+    """
+    Given a token, it will return the user's information
+    """
+    permisson_classes = (TokenAuthentication,)
+    serializer_class = EmployeeInfoSerializer
+
+    def get_queryset(self):
+        return Employee.objects.get(pk=request.user.id)
 
 class ChecklistView(generics.ListCreateAPIView):
     """
