@@ -80,18 +80,20 @@ class ChecklistTemplateView(generics.ListCreateAPIView):
     Create a Checklist Template
     '''
     def post(self, request, *args, **kwargs):
+        if request.user.role != '1':
+            return Response(data={"Forbidden":request.user.role}, status=status.HTTP_403_FORBIDDEN)
         serializer = server.serializers.ChecklistTemplateSerializer(data=request.DATA)
         if(serializer.is_valid()):  
-            print serializer.data
-            checklist_template = ChecklistTemplate.objects.create(
-                title=serializer.data["title"],
-                description=serializer.data["description"],
-                json_contents=serializer.data["json_contents"],
-                status=serializer.data["status"],
-                owner=request.user
-            )
-            checklist_template.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            if (request.user.role == '1'):
+                checklist_template = ChecklistTemplate.objects.create(
+                    title=serializer.data["title"],
+                    description=serializer.data["description"],
+                    json_contents=serializer.data["json_contents"],
+                    status=serializer.data["status"],
+                    owner=request.user
+                )
+                checklist_template.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
