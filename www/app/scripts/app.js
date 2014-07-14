@@ -8,6 +8,7 @@ angular
     'ngRoute',
     'mm.foundation'
   ])
+  .constant('setting', {apiurl: 'http://localhost:8000'})
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {

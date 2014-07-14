@@ -14,19 +14,19 @@
 
 .weather-login {
 	position: absolute;
-	top: 50%;
-	left: 50%;
+	top: 20%;
+	left: 40%;
 }
 
 .weather-circle img {
-   width: 300px;
-   height: 300px;
+   width: 500px;
+   height: 500px;
    border: 1px solid #ccc;
-   -webkit-border-radius: 150px;
-   -moz-border-radius: 150px;
-   -ms-border-radius: 150px;
-   -o-border-radius: 150px;
-    border-radius: 150px;
+   -webkit-border-radius: 250px;
+   -moz-border-radius: 250px;
+   -ms-border-radius: 250px;
+   -o-border-radius: 250px;
+    border-radius: 250px;
 }
 
 .weather-circle2 img {
