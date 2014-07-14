@@ -45,24 +45,55 @@ class RegisterEmployeeView(generics.CreateAPIView):
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-class ChecklistView(generics.CreateAPIView):
+class ChecklistView(generics.ListCreateAPIView):
     """
-    This view provides an endpoint for displaying checklists.
+    This view provides an endpoint for displaying checklists for land surveyors and managers, and the 
+    ability for managers to create new checklists
+    
+    GET - Returns all checklists where the manager is the assigner in a list format
+    {
+        [
+            checklist1, 
+            checklist2
+        ]
+    }
+
+    POST - Creates a new checklist setting the manager as the assignee.
+
     """
     permission_classes = (TokenAuthentication,)
+    serializer_class = ChecklistSerializer
 
-    def get(self, request, *args, **kwargs):
-        cl = Checklist.objects.all()
-        serializer = ChecklistSerializer(cl, many=True)
-        return Response(serializer.data)
+    def get_queryset(sekf):
+        if self.request.user.role == '0':
+            queryset = Checklist.objects.filter(assignee=request.user)
+        elif self.request.user.role == '1':
+            queryset = Checklist.objects.filter(assigner=request.user)
+        return queryset
+
 
     def post(self, request, *args, **kwargs):
+        """
+        This post will create a new checklist with the manager as the assignee.
+        TODO: It currently does not take into account templating
+        """
+        if request.user.role != '1':
+            return Response({"error":"Only managers can create new checklists"}, status=status.HTTP_403_FORBIDDEN)
         serializer = ChecklistSerializer(data=request.DATA)
         if serializer.is_valid():
-            serializer.save()
+            checklist = Checklist.objects.create(
+                    title=serializer.data["title"],
+                    description=serializer.data["description"],
+                    json_contents=serializer.data["json_contents"],
+                    template=serializer.data["template"],
+                    assignee=serializer.data["assignee"],
+                    assigner=request.user
+                )
+            checklist.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
           return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class ChecklistTemplateView(generics.ListCreateAPIView):
     authentication_classes = (TokenAuthentication,)
