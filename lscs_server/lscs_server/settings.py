@@ -58,6 +58,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
 #'django.middleware.csrf.CsrfViewMiddleware', Removing middleware because it's not gonna be needed for now
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'rest_framework.authentication.TokenAuthentication',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )

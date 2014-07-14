@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, generics, status
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from models import Employee, ChecklistTemplate, Checklist
 from serializers import EmployeeSerializer, ChecklistSerializer
@@ -48,7 +49,7 @@ class ChecklistView(generics.CreateAPIView):
     """
     This view provides an endpoint for displaying checklists.
     """
-    permission_classes = (AllowAny,)
+    permission_classes = (TokenAuthentication,)
 
     def get(self, request, *args, **kwargs):
         cl = Checklist.objects.all()
@@ -63,31 +64,37 @@ class ChecklistView(generics.CreateAPIView):
         else:
           return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ChecklistTemplateListView(generics.ListAPIView):
-    authentication_classes = (AllowAny,)
+class ChecklistTemplateView(generics.ListCreateAPIView):
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = server.serializers.ChecklistTemplateSerializer
     '''
     GET - /template/?$
-    Return a set of Templates for the 
+    Return a set of Templates for the corresponding user that are active
     '''
-    def get_queryset(self, request, *args, **kwargs):
+    def get_queryset(self):
         #Return only the currently active checklists
-        return ChecklistTemplate.objects.filter(checklisttemplate__status='A')
-
-
-class ChecklistTemplateCreateView(generics.CreateAPIView):
-    #TODO: Change for Authentication
-    authentication_classes = (AllowAny,)
+        return ChecklistTemplate.objects.filter(status='A', owner=self.request.user)
+    
     '''
     POST - /template/?$
     Create a Checklist Template
     '''
     def post(self, request, *args, **kwargs):
-        serializer = server.serializers.ChecklistTemplateSerializer(fields=request.DATA.keys(), data=request.DATA)
-        if(serializer.is_valid()):
-            serializer.save()
+        serializer = server.serializers.ChecklistTemplateSerializer(data=request.DATA)
+        if(serializer.is_valid()):  
+            print serializer.data
+            checklist_template = ChecklistTemplate.objects.create(
+                title=serializer.data["title"],
+                description=serializer.data["description"],
+                json_contents=serializer.data["json_contents"],
+                status=serializer.data["status"],
+                owner=request.user
+            )
+            checklist_template.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class ChecklistTemplateUpdateView(generics.UpdateAPIView):
