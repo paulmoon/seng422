@@ -50,11 +50,11 @@ class UserInformationView(generics.RetrieveAPIView):
     """
     Given a token, it will return the user's information
     """
-    permisson_classes = (TokenAuthentication,)
+    authentication_classes = (TokenAuthentication,)
     serializer_class = EmployeeInfoSerializer
 
-    def get_queryset(self):
-        return Employee.objects.get(pk=request.user.id)
+    def get_object(self):
+        return Employee.objects.get(pk=self.request.user.id)
 
 class ChecklistView(generics.ListCreateAPIView):
     """
@@ -72,14 +72,14 @@ class ChecklistView(generics.ListCreateAPIView):
     POST - Creates a new checklist setting the manager as the assignee.
 
     """
-    permission_classes = (TokenAuthentication,)
+    authentication_classes = (TokenAuthentication,)
     serializer_class = ChecklistSerializer
 
     def get_queryset(sekf):
         if self.request.user.role == '0':
-            queryset = Checklist.objects.filter(assignee=request.user)
+            queryset = Checklist.objects.filter(assignee=self.request.user)
         elif self.request.user.role == '1':
-            queryset = Checklist.objects.filter(assigner=request.user)
+            queryset = Checklist.objects.filter(assigner=self.request.user)
         return queryset
 
     def post(self, request, *args, **kwargs):
