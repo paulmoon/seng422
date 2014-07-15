@@ -48,10 +48,11 @@ class ChecklistView(generics.CreateAPIView):
     """
     This view provides an endpoint for displaying checklists.
     """
-    permission_classes = (AllowAny,)
+    permission_classes = (tokenauthentication,)
 
     def get(self, request, *args, **kwargs):
-        cl = Checklist.objects.all()
+        #?????????
+        cl = Checklist.objects.filter(request.user)
         serializer = ChecklistSerializer(cl, many=True)
         return Response(serializer.data)
 

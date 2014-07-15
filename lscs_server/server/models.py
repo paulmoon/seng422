@@ -38,4 +38,5 @@ class Checklist(models.Model):
     description = models.TextField()
     json_contents = models.TextField()
     assignee = models.ForeignKey(Employee, related_name="assignee")
+    assigner = models.ForeignKey(Employee, related_name="assigner")
     template = models.ForeignKey(ChecklistTemplate, related_name="template", null=True, blank=True)
