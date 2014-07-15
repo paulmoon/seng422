@@ -2,12 +2,13 @@
 
 angular.module('angWeatherAppApp')
   .controller('LoginCtrl', function ($scope, $http, setting) {
-  	var url = setting.apiurl + '/verify_credentials'; 
+  	var url = setting.apiurl + "/verify_credentials"; 
   	$scope.submit = function(){
   		var sendData = {
-  			"usernamename": $scope.username,
+  			"username": $scope.username,
   			"password": $scope.password
   		};
+
   		$http.post(url, sendData)
   		.success(function(data){
   			console.log(data);
