@@ -30,6 +30,11 @@ class EmployeeSerializer(serializers.ModelSerializer):
         else:
             return attrs
 
+class EmployeeInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = server.models.Employee
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'role')
+
 class ChecklistSerializer(serializers.ModelSerializer):
     class Meta:
         model = server.models.Checklist

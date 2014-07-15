@@ -29,7 +29,7 @@ class ChecklistTemplate(models.Model):
 
     title = models.CharField(max_length=100)
     description = models.TextField()
-
+    owner = models.ForeignKey(Employee, related_name="owner")
     status = models.CharField(max_length=1, choices=STATUS)
     json_contents = models.TextField()
 
@@ -37,6 +37,6 @@ class Checklist(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     json_contents = models.TextField()
-    assignee = models.ForeignKey(Employee, related_name="assignee")
-    assigner = models.ForeignKey(Employee, related_name="assigner")
+    assigner = models.ForeignKey(Employee, related_name="assigner", null=True, blank=True)
+    assignee = models.ForeignKey(Employee, related_name="assignee", null=True, blank=True)
     template = models.ForeignKey(ChecklistTemplate, related_name="template", null=True, blank=True)

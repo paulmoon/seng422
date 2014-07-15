@@ -2,9 +2,10 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, generics, status
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from models import Employee, ChecklistTemplate, Checklist
-from serializers import EmployeeSerializer, ChecklistSerializer
+from serializers import EmployeeSerializer, ChecklistSerializer, EmployeeInfoSerializer
 import server
 
 
@@ -26,6 +27,7 @@ class RegisterEmployeeView(generics.CreateAPIView):
     This view provides an endpoint for new users to register.
     """
     permission_classes = (AllowAny,)
+    serializer_class = EmployeeSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = EmployeeSerializer(data=request.DATA)
@@ -44,51 +46,98 @@ class RegisterEmployeeView(generics.CreateAPIView):
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-class ChecklistView(generics.CreateAPIView):
+class UserInformationView(generics.RetrieveAPIView):
     """
-    This view provides an endpoint for displaying checklists.
+    Given a token, it will return the user's information
     """
-    permission_classes = (tokenauthentication,)
+    permisson_classes = (TokenAuthentication,)
+    serializer_class = EmployeeInfoSerializer
 
-    def get(self, request, *args, **kwargs):
-        #?????????
-        cl = Checklist.objects.filter(request.user)
-        serializer = ChecklistSerializer(cl, many=True)
-        return Response(serializer.data)
+    def get_queryset(self):
+        return Employee.objects.get(pk=request.user.id)
+
+class ChecklistView(generics.ListCreateAPIView):
+    """
+    This view provides an endpoint for displaying checklists for land surveyors and managers, and the 
+    ability for managers to create new checklists
+    
+    GET - Returns all checklists where the manager is the assigner in a list format
+    {
+        [
+            checklist1, 
+            checklist2
+        ]
+    }
+
+    POST - Creates a new checklist setting the manager as the assignee.
+
+    """
+    permission_classes = (TokenAuthentication,)
+    serializer_class = ChecklistSerializer
+
+    def get_queryset(sekf):
+        if self.request.user.role == '0':
+            queryset = Checklist.objects.filter(assignee=request.user)
+        elif self.request.user.role == '1':
+            queryset = Checklist.objects.filter(assigner=request.user)
+        return queryset
 
     def post(self, request, *args, **kwargs):
+        """
+        This post will create a new checklist with the manager as the assignee.
+        TODO: It currently does not take into account templating
+        """
+        if request.user.role != '1':
+            return Response({"error":"Only managers can create new checklists"}, status=status.HTTP_403_FORBIDDEN)
         serializer = ChecklistSerializer(data=request.DATA)
         if serializer.is_valid():
-            serializer.save()
+            checklist = Checklist.objects.create(
+                    title=serializer.data["title"],
+                    description=serializer.data["description"],
+                    json_contents=serializer.data["json_contents"],
+                    template=serializer.data["template"],
+                    assignee=serializer.data["assignee"],
+                    assigner=request.user
+                )
+            checklist.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
           return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ChecklistTemplateListView(generics.ListAPIView):
-    authentication_classes = (AllowAny,)
+
+class ChecklistTemplateView(generics.ListCreateAPIView):
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = server.serializers.ChecklistTemplateSerializer
     '''
     GET - /template/?$
-    Return a set of Templates for the 
+    Return a set of Templates for the corresponding user that are active
     '''
-    def get_queryset(self, request, *args, **kwargs):
+    def get_queryset(self):
         #Return only the currently active checklists
-        return ChecklistTemplate.objects.filter(checklisttemplate__status='A')
-
-
-class ChecklistTemplateCreateView(generics.CreateAPIView):
-    #TODO: Change for Authentication
-    authentication_classes = (AllowAny,)
+        return ChecklistTemplate.objects.filter(status='A', owner=self.request.user)
+    
     '''
     POST - /template/?$
     Create a Checklist Template
     '''
     def post(self, request, *args, **kwargs):
-        serializer = server.serializers.ChecklistTemplateSerializer(fields=request.DATA.keys(), data=request.DATA)
-        if(serializer.is_valid()):
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        if request.user.role != '1':
+            return Response(data={"Forbidden":request.user.role}, status=status.HTTP_403_FORBIDDEN)
+        serializer = server.serializers.ChecklistTemplateSerializer(data=request.DATA)
+        if(serializer.is_valid()):  
+            if (request.user.role == '1'):
+                checklist_template = ChecklistTemplate.objects.create(
+                    title=serializer.data["title"],
+                    description=serializer.data["description"],
+                    json_contents=serializer.data["json_contents"],
+                    status=serializer.data["status"],
+                    owner=request.user
+                )
+                checklist_template.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class ChecklistTemplateUpdateView(generics.UpdateAPIView):
