@@ -27,6 +27,7 @@ class RegisterEmployeeView(generics.CreateAPIView):
     This view provides an endpoint for new users to register.
     """
     permission_classes = (AllowAny,)
+    serializer_class = EmployeeSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = EmployeeSerializer(data=request.DATA)
