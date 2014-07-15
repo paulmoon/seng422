@@ -76,7 +76,7 @@ class ChecklistView(generics.ListCreateAPIView):
     serializer_class = ChecklistSerializer
 
     def get_queryset(sekf):
-        if self.request.user.role == '0':
+        if self.request.user.role == '2':
             queryset = Checklist.objects.filter(assignee=self.request.user)
         elif self.request.user.role == '1':
             queryset = Checklist.objects.filter(assigner=self.request.user)
@@ -95,8 +95,8 @@ class ChecklistView(generics.ListCreateAPIView):
                     title=serializer.data["title"],
                     description=serializer.data["description"],
                     json_contents=serializer.data["json_contents"],
-                    template=serializer.data["template"],
-                    assignee=serializer.data["assignee"],
+                    template=ChecklistTemplate.objects.get(pk=serializer.data["template"]),
+                    assignee=Employee.objects.get(pk=serializer.data["assignee"]),
                     assigner=request.user
                 )
             checklist.save()
