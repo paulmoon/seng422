@@ -56,6 +56,26 @@ class UserInformationView(generics.RetrieveAPIView):
     def get_object(self):
         return Employee.objects.get(pk=self.request.user.id)
 
+class ChecklistModify(generics.ListCreateAPIView):
+    """
+
+    """
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = ChecklistSerializer
+
+    def post(self, request, *args, **kwargs):
+        if request.user.role != '1':
+            return Response({"error":"Only managers can modify checklists"}, status=status.HTTP_403_FORBIDDEN)
+        serializer = ChecklistSerializer(data=request.DATA);
+        if serializer.is_valid():
+            checklist = Checklist.objects.get(pk=kwargs['checklistID'])
+            checklist.title = serializer.data["title"]
+            checklist.description = serializer.data["description"]
+            checklist.json_contents = serializer.data["json_contents"]
+            checklist.assignee = Employee.objects.get(pk=serializer.data["assignee"])
+            checklist.save()
+            return Response('update')
+
 class ChecklistView(generics.ListCreateAPIView):
     """
     This view provides an endpoint for displaying checklists for land surveyors and managers, and the 
@@ -75,7 +95,7 @@ class ChecklistView(generics.ListCreateAPIView):
     authentication_classes = (TokenAuthentication,)
     serializer_class = ChecklistSerializer
 
-    def get_queryset(sekf):
+    def get_queryset(self):
         if self.request.user.role == '2':
             queryset = Checklist.objects.filter(assignee=self.request.user)
         elif self.request.user.role == '1':
