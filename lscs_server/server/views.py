@@ -145,16 +145,15 @@ class ChecklistTemplateView(generics.ListCreateAPIView):
             return Response(data={"Forbidden":request.user.role}, status=status.HTTP_403_FORBIDDEN)
         serializer = server.serializers.ChecklistTemplateSerializer(data=request.DATA)
         if(serializer.is_valid()):  
-            if (request.user.role == '1'):
-                checklist_template = ChecklistTemplate.objects.create(
-                    title=serializer.data["title"],
-                    description=serializer.data["description"],
-                    json_contents=serializer.data["json_contents"],
-                    status=serializer.data["status"],
-                    owner=request.user
-                )
-                checklist_template.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            checklist_template = ChecklistTemplate.objects.create(
+                title=serializer.data["title"],
+                description=serializer.data["description"],
+                json_contents=serializer.data["json_contents"],
+                status=serializer.data["status"],
+                owner=request.user
+            )
+            checklist_template.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -162,7 +161,7 @@ class ChecklistTemplateView(generics.ListCreateAPIView):
 
 class ChecklistTemplateUpdateView(generics.UpdateAPIView):
     #TODO: Change for Authenication
-    authentication_classes = (AllowAny,)
+    authentication_classes = (TokenAuthentication,)
     '''
     PUT - /template/(?P<templateID>\d+)/?$
     Update a checklist template
@@ -170,17 +169,17 @@ class ChecklistTemplateUpdateView(generics.UpdateAPIView):
     def put(self, request, *args, **kwargs):
         template = None
         try:
-            template = ChecklistTemplates.objects.get(pk=request.DATA['id'])
+            template = ChecklistTemplate.objects.get(pk=kwargs['templateID'])
         except KeyError:
-            HttpResponseServerError("No template exists with that ID!")
+            return Response("No template exists with that ID!")
 
-        serializer = server.serializers.ChecklistTemplateSerializer(fields=request.DATA.keys(), data=request.DATA)
+        serializer = server.serializers.ChecklistTemplateSerializer(data=request.DATA)
         if(serializer.is_valid()):
             #update the fields provided
             if('title' in request.DATA.keys()):
                 template.title = serializer.init_data['title']
             if('description' in request.DATA.keys()):
-                template.description = serializer.init_data['descroption']
+                template.description = serializer.init_data['description']
             if('json_contents' in request.DATA.keys()):
                 template.json_contents = serializer.init_data['json_contents']
             if('status' in request.DATA.keys()):
@@ -193,7 +192,7 @@ class ChecklistTemplateUpdateView(generics.UpdateAPIView):
 
 class ChecklistTemplateDeactivateView(generics.DestroyAPIView):
     #TODO: Change for authentication
-    authentication_classes = (AllowAny,)
+    authentication_classes = (TokenAuthentication,)
     '''
     DELETE - /template/(?P<templateID>\d+)/?$
     Delete a checklist provided its templateID. In our
@@ -202,7 +201,7 @@ class ChecklistTemplateDeactivateView(generics.DestroyAPIView):
     def delete(self, request, *args, **kwargs):
         template = None
         try:
-            template = ChecklistTemplates.objects.get(pk=request.DATA['id'])
+            template = ChecklistTemplate.objects.get(pk=kwargs['templateID'])
         except KeyError:
             HttpResponseServerError("No template exists with that ID!")
 
