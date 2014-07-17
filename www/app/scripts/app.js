@@ -9,14 +9,24 @@ angular
     'mm.foundation'
   ])
   .constant('setting', {apiurl: 'http://localhost:8000'})
-  .factory('appAuthorize', function ($cookieStore, $http, setting){
+  .factory('appAuthorize', function ($cookieStore, $http, $location, setting){
       return {
         login: function (credentials) {
             var url = setting.apiurl + "/verify_credentials";
+            var authorize_url = setting.apiurl + "/authorize_token/";
             $http.post(url, credentials)
             .success(function(data){
               $cookieStore.put("angWeatherToken", data.token);
               console.log("Added token to cookie store");
+              $http.get(authorize_url)
+              .success(function(data){
+                if(data.role == 0) {
+                  $location.path("/main");
+                }
+              })
+              .error(function(data){
+                console.log(data);
+              });
             })
             .error(function(data) {
                 console.log('Error: ' + data);

@@ -1,9 +1,11 @@
 'use strict';
 
 angular.module('angWeatherAppApp')
-  .controller('LoginCtrl', function ($scope, $http, setting, $cookieStore, $location, appAuthorize) {
+  .controller('LoginCtrl', function ($scope, $http, setting, $cookieStore, $location, appAuthorize, $q) {
   	// var url = setting.apiurl + "/verify_credentials";
   	var url = setting.apiurl + "/authorize_token/";
+  	// var deferred = $q.defer();
+  	// var promise = deferred.promise;
   	// var authorize_token = 'Token ' + $cookieStore.get("angWeatherToken");
   	// $http.defaults.headers.common.Authorization = authorize_token;
   	// $http.get(authorize_url)
@@ -21,7 +23,7 @@ angular.module('angWeatherAppApp')
   	// 	console.log(data);
   	// });
 	if(appAuthorize.isLoggedIn() == true) {
-		console.log("hi1");
+		console.log("hi lo");
 		$http.get(url)
 		.success(function(data){
 			if(data.role == 0) {
@@ -40,6 +42,7 @@ angular.module('angWeatherAppApp')
   			"password": $scope.password
   		};
   		appAuthorize.login(sendData);
+  		
 	  		// $http.post(url, sendData)
   		// .success(function(data){
   		// 	$cookieStore.put('angWeatherToken', data.token);
