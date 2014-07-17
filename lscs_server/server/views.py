@@ -58,7 +58,10 @@ class UserInformationView(generics.RetrieveAPIView):
 
 class ChecklistModify(generics.ListCreateAPIView):
     """
+    The ChecklistModify view allows manager to modify checklist infomation
+    when providing the id of the checklist.
 
+    POST - provided the id of the checklist, modify all information relate to it.
     """
     authentication_classes = (TokenAuthentication,)
     serializer_class = ChecklistSerializer
