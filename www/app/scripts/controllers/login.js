@@ -23,12 +23,15 @@ angular.module('angWeatherAppApp')
   	// 	console.log(data);
   	// });
 	if(appAuthorize.isLoggedIn() == true) {
-		console.log("hi lo");
 		$http.get(url)
 		.success(function(data){
 			if(data.role == 0) {
-				$location.path("/main");
-			}
+				$location.path("/manager");
+			} else if(data.role == 1) {
+        $location.path("/surveyor");
+      } else if(data.role == 2) {
+        $location.path("/admin");
+      }
 		})
 		.error(function(data){
 			console.log(data);

@@ -7,21 +7,28 @@
        <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
       <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
     </ul>
-
-    <section class="top-bar-section">
-    <ul class="right">
-      <li><a ng-href="#"><i class="fi-power"></i> Logout</a></li>
-    </ul>
-      <!-- Right Nav Section -->
-
-      <!-- Left Nav Section -->
-      <ul class="left">
-        <li class="divider"></li>
-        <li><a href="#"><i class="fi-mail"></i> Check List</a></li>
-        <li class="divider"></li>
-        <li><a ng-href="#/profile"><i class="fi-widget"></i> Settings</a></li>
-        <li class="divider"></li>
+    <div ng-controller="HeaderCtrl">
+      <section class="top-bar-section">
+      <ul class="right">
+      <li class="has-dropdown">
+          <a href="#">Welcome, <span my-name></span></a>
+          <ul class="dropdown">
+              <li><a ng-href="#/profile"><i class="fi-widget"></i> Settings</a></li>
+             <li><a ng-click="logout()"><i class="fi-power"></i> Logout</a></li>
+          </ul>
+        </li>
       </ul>
-    </section>
+        <!-- Right Nav Section -->
+
+        <!-- Left Nav Section -->
+        <ul class="left">
+          <li class="divider"></li>
+          <li><a href="#"><i class="fi-mail"></i> Check List</a></li>
+          <li class="divider"></li>
+          
+          <li class="divider"></li>
+        </ul>
+      </section>
+    </div>
   </nav>
 </div>
