@@ -18,8 +18,12 @@ angular
             .success(function(data){
               $cookieStore.put("angWeatherToken", data.token);
               console.log("Added token to cookie store");
+              var currentToken = $cookieStore.get("angWeatherToken");
+              var authorize_token = "Token " + currentToken;
+              $http.defaults.headers.common.Authorization = authorize_token;
               $http.get(authorize_url)
               .success(function(data){
+                
                 if(data.role == 0) {
                   $location.path("/manager");
                 } else if(data.role == 1) {
