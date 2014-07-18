@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angWeatherAppApp')
+angular.module('lscsClientApp')
   .controller('ManagerCtrl', function ($scope, appAuthorize, $location, setting, $http) {
   	var url = setting.apiurl + "/authorize_token/";
   	if(appAuthorize.isLoggedIn() == true){

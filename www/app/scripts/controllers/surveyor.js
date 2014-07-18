@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angWeatherAppApp')
+angular.module('lscsClientApp')
   .controller('SurveyorCtrl', function ($scope, appAuthorize, $location, setting, $http) {
   	if(appAuthorize.isLoggedIn() == true){
   		$http.get(url)
