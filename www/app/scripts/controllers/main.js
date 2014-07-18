@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angWeatherAppApp')
+angular.module('lscsClientApp')
   .controller('MainCtrl', function ($scope) {
     $scope.actives = [
       { title: "Forests Report", content: "Some report about forests"},

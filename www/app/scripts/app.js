@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-  .module('angWeatherAppApp', [
+  .module('lscsClientApp', [
     'ngCookies',
     'ngResource',
     'ngSanitize',
