@@ -66,6 +66,17 @@ class ChecklistModify(generics.ListCreateAPIView):
     authentication_classes = (TokenAuthentication,)
     serializer_class = ChecklistSerializer
 
+    def get(self, request, *args, **kwargs):
+        checklistID = int(kwargs["checklistID"])
+        try:
+            checklist = Checklist.objects.get(pk=checklistID)
+            serializer = ChecklistSerializer(checklist)
+            return Response(serializer.data, status.HTTP_200_OK)
+        except ObjectDoesNotExist:
+            return Response("Checklist with id {} does not exist.".format(
+                checklistID), status.HTTP_404_NOT_FOUND)
+
+
     def post(self, request, *args, **kwargs):
         if request.user.role != '1':
             return Response({"error":"Only managers can modify checklists"}, status=status.HTTP_403_FORBIDDEN)
