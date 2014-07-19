@@ -26,11 +26,11 @@ angular.module('lscsClientApp')
 		$http.get(url)
 		.success(function(data){
 			if(data.role == 0) {
-				$location.path("/manager");
+				$location.path("/admin");
 			} else if(data.role == 1) {
-        $location.path("/surveyor");
+        $location.path("/manager");
       } else if(data.role == 2) {
-        $location.path("/admin");
+        $location.path("/surveyor");
       }
 		})
 		.error(function(data){
