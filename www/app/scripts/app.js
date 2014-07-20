@@ -25,11 +25,11 @@ angular
               .success(function(data){
                 
                 if(data.role == 0) {
-                  $location.path("/manager");
-                } else if(data.role == 1) {
-                  $location.path("/surveyor");
-                } else if(data.role == 2) {
                   $location.path("/admin");
+                } else if(data.role == 1) {
+                  $location.path("/manager");
+                } else if(data.role == 2) {
+                  $location.path("/surveyor");
                 }
               })
               .error(function(data){
