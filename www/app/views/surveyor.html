@@ -1,18 +1,31 @@
 <div ng-include src="'views/header.html'"></div>
 <hr />
 <div class="row">
-  <div ng-controller="SurveyorCtrl">
-      <tr ng-repeat="cl in cls">
-          <td>
-              {{ cl.title }}
-          </td>
-          <td>
-              {{ cl.assignee }}
-          </td>
-          <td>
-              {{ cl.assigner }}
-          </td>
-      </tr>
+  <div align="center" ng-controller="SurveyorCtrl">
+      <table>
+          <tr>
+              <td>
+                  Title
+              </td>
+              <td>
+                  Assigner
+              </td>
+              <td>
+                  Date
+              </td>
+          </tr>
+          <tr ng-repeat="cl in cls">
+              <td>
+                  {{ cl.title }}
+              </td>
+              <td>
+                  {{ cl.assigner }}
+              </td>
+              <td>
+
+              </td>
+          </tr>
+      </table>
   </div>
 
 
