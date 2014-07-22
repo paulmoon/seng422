@@ -2,9 +2,10 @@
 <hr />
 <div class="row">
   <div ng-controller="SurveyorCtrl">
+      <table>
       <tr ng-repeat="cl in cls">
           <td>
-              {{ cl.title }}
+              {{cl.title}} 
           </td>
           <td>
               {{ cl.assignee }}
@@ -13,6 +14,7 @@
               {{ cl.assigner }}
           </td>
       </tr>
+      </table>
   </div>
 
 
