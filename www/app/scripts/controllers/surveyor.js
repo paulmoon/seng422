@@ -19,7 +19,7 @@ angular.module('lscsClientApp')
         var cl_url = setting.apiurl + "/checklist/";
         $http.get(cl_url)
         .success(function(data){
-            $scope.cls = data;
+            $scope.cls = data
         })
         .error(function(data){
             console.log('Error' + data);
