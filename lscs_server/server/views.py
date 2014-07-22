@@ -11,6 +11,7 @@ import server
 
 
 class EmployeeViewSet(viewsets.ViewSet):
+    permission_classes = (AllowAny,)
     def list(self, request):
         queryset = Employee.objects.all()
         serializer = EmployeeSerializer(queryset, many=True)
@@ -114,6 +115,8 @@ class ChecklistView(generics.ListCreateAPIView):
             queryset = Checklist.objects.filter(assignee=self.request.user)
         elif self.request.user.role == '1':
             queryset = Checklist.objects.filter(assigner=self.request.user)
+        else:
+            queryset = None
         return queryset
 
     def post(self, request, *args, **kwargs):
