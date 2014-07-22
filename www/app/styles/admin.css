@@ -1,0 +1,14 @@
+.employee-panel {
+    background-color: #000000;
+    width: 50%;
+    height: 100%;
+    float: left;
+    border:1px solid #000;
+}
+
+.employee-preview {
+    background-color: #FF0000;
+    float: left;
+    width: 50%;
+    height: 100%
+}
