@@ -6,9 +6,9 @@ angular.module('lscsClientApp')
   	if(appAuthorize.isLoggedIn() == true){
   		$http.get(url)
   		.success(function(data){
-  			if(data.role == 1){
+  			if(data.role == 2){
   				$location.path("/surveyor");
-  			} else if(data.role == 2){
+  			} else if(data.role == 0){
   				$location.path("/admin");
   			}
   		})

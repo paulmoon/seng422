@@ -1,8 +1,24 @@
 <div ng-include src="'views/header.html'"></div>
-<div class="row"></div>
 <hr />
 <div class="row">
   <div ng-controller="SurveyorCtrl">
+      <tr ng-repeat="cl in cls">
+          <td>
+              {{ cl.title }}
+          </td>
+          <td>
+              {{ cl.assignee }}
+          </td>
+          <td>
+              {{ cl.assigner }}
+          </td>
+      </tr>
   </div>
-  <div ng-include src="'views/checklist.html'"></div>
+
+
+  <!-- Broken...
+  <div ng-include src="'views/checklist.html'">
+
+  </div>-->
 </div>
+
