@@ -13,25 +13,30 @@
               <td>
                   Date
               </td>
+              <td>
+                  Description
+              </td>
           </tr>
           <tr ng-repeat="cl in cls">
               <td>
                   {{ cl.title }}
               </td>
               <td>
-                  {{ cl.assigner }}
+                  {{ cl.assigner.first_name}} {{ cl.assigner.last_name}}
               </td>
               <td>
-
+                  ????
+              </td>
+              <td>
+                  {{ cl.description }}
               </td>
           </tr>
       </table>
   </div>
 
 
-  <!-- Broken...
-  <div ng-include src="'views/checklist.html'">
+  <!--<div ng-include src="'views/checklist.html'">-->
+  <!--</div>-->
 
-  </div>-->
 </div>
 
