@@ -68,18 +68,22 @@ angular.module('lscsClientApp')
 	    },
 	    zoom: 9
 	};
+  })
+  .directive("ngWeather", function(){
+	return {
+		link: function(scope, element, attributes){
 		$.simpleWeather({
 	    location: 'Austin, TX',
 	    woeid: '',
 	    unit: 'f',
 	    success: function(weather) {
-	      html = '<p>'+weather.temp+'&deg;'+weather.units.temp+'</p>';
-	  
-	      $("#weather").html(html);
+	    	console.log(weather);
 	    },
 	    error: function(error) {
-	      $("#weather").html('<p>'+error+'</p>');
+	      console.log(error);
 	    }
 	  });
-  });
+	}
+	}
+});
 
