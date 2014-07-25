@@ -6,7 +6,8 @@ angular
     'ngResource',
     'ngSanitize',
     'ngRoute',
-    'mm.foundation'
+    'mm.foundation',
+    'google-maps'
   ])
   .constant('setting', {apiurl: 'http://localhost:8000'})
   .factory('appAuthorize', function ($cookieStore, $http, $location, setting){

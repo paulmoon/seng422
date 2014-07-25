@@ -127,3 +127,13 @@
   margin-left: 15px;
   margin-top: 15px;
 }
+
+.angular-google-map-container { 
+  height: 400px; 
+  width: 675px;
+}
+
+.lscs-map {
+  margin-left: 15px;
+  margin-top: 15px;
+}
