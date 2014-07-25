@@ -72,13 +72,23 @@ WSGI_APPLICATION = 'lscs_server.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'lscs_server',
+# 	'USER': 'lscs',
+# 	'PASSWORD': '101Penguin!',
+# 	'HOST': '198.23.149.106',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'lscs_server',
-	'USER': 'lscs',
-	'PASSWORD': '101Penguin!',
-	'HOST': '198.23.149.106',
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'lscs_server',
+    'USER': 'lscs',
+    'PASSWORD': '101Penguin!',
+    'HOST': 'localhost',
     }
 }
 

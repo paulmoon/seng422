@@ -1,7 +1,144 @@
 <div ng-include src="'views/header.html'"></div>
-<div class="row"></div>
-<hr />
 <div class="row">
-  <div ng-controller="ManagerCtrl">
-  </div>
+	<h1 class="lscs-manager" style="margin-left: 15px"><span class="lscs-header-icon"><i class="fi-results"></i></span> Manager</h1>
+	<hr />
 </div>
+<div ng-controller="ManagerCtrl">
+	<div class="row">
+		<div ng-repeat="headerTab in headerTabs" ng-click="select($index)" ng-class="{lscsSelected: $index == selected}" class="lscs-panel lscs-row-button">
+			<div class="lscs-panel-inner">
+				<div class="lscs-header"><small>{{headerTab.header}}</small></div>
+				<div class="lscs-subheader">11 <span><i class="{{headerTab.icon}}"></i></span></div>
+			</div>
+		</div>
+		<div ng-click="open()" class="lscs-panel-create lscs-row-button">
+			<div class="lscs-panel-inner">
+				<div class="lscs-create-survey"><i class="fi-plus"></i></div>
+				<div class="lscs-create-survey-sub">CREATE NEW SURVEY</div>
+			</div>
+		</div>
+	</div>
+	<hr />
+	<ng-include src="template"></ng-include>
+
+	<script type="text/ng-template" id="page0">
+    	<div class="row">
+    		<h4 class="lscs-manager" style="margin-left: 15px"><span class="lscs-header-icon-sub"><i class="fi-results"></i></span> &nbsp;List of Ongoing Surveys</h4>
+    	</div>
+    	<div class="row">
+    		<table class="lscs-table-sub lscs-row-button">
+			  <thead>
+			    <tr>
+			      <th width="100">Survey ID</th>
+			      <th width="250">Survey Name</th>
+			      <th width="150">Surveyor</th>
+			      <th width="150">Date Sent</th>
+			      <th width="150">Action</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <td>Content Goes Here</td>
+			      <td>This is longer content Donec id elit non mi porta gravida at eget metus.</td>
+			      <td>Content Goes Here</td>
+			      <td>Content Goes Here</td>
+			      <td>Content Goes Here</td>
+			    </tr>
+			    <tr>
+			      <td>Content Goes Here</td>
+			      <td>This is longer Content Goes Here Donec id elit non mi porta gravida at eget metus.</td>
+			      <td>Content Goes Here</td>
+			      <td>Content Goes Here</td>
+			      <td>Content Goes Here</td>
+			    </tr>
+			    <tr>
+			      <td>Content Goes Here</td>
+			      <td>This is longer Content Goes Here Donec id elit non mi porta gravida at eget metus.</td>
+			      <td>Content Goes Here</td>
+			      <td>Content Goes Here</td>
+			      <td>Content Goes Here</td>
+			    </tr>
+			  </tbody>
+			</table>
+			// <div ng-weather></div>
+			<google-map class="lscs-row-button lscs-map" center="map.center" zoom="map.zoom"></google-map>
+    	</div>
+	</script>
+  	<script type="text/ng-template" id="page1">
+    	<div class="row">
+    		<h4 class="lscs-manager" style="margin-left: 15px"><span class="lscs-header-icon-sub"><i class="fi-results"></i></span> &nbsp;List of Completed Surveys</h4>
+    	</div>
+    	<div class="row">
+    		<table class="lscs-table-sub lscs-row-button">
+			  <thead>
+			    <tr>
+			      <th width="100">Survey ID</th>
+			      <th width="250">Survey Name</th>
+			      <th width="150">Surveyor</th>
+			      <th width="150">Date Completed</th>
+			      <th width="150">Action</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <td>Content Goes Here</td>
+			      <td>This is longer content Donec id elit non mi porta gravida at eget metus.</td>
+			      <td>Content Goes Here</td>
+			      <td>Content Goes Here</td>
+			      <td>Content Goes Here</td>
+			    </tr>
+			    <tr>
+			      <td>Content Goes Here</td>
+			      <td>This is longer Content Goes Here Donec id elit non mi porta gravida at eget metus.</td>
+			      <td>Content Goes Here</td>
+			      <td>Content Goes Here</td>
+			      <td>Content Goes Here</td>
+			    </tr>
+			    <tr>
+			      <td>Content Goes Here</td>
+			      <td>This is longer Content Goes Here Donec id elit non mi porta gravida at eget metus.</td>
+			      <td>Content Goes Here</td>
+			      <td>Content Goes Here</td>
+			      <td>Content Goes Here</td>
+			    </tr>
+			  </tbody>
+			</table>
+			<google-map class="lscs-row-button lscs-map" center="map.center" zoom="map.zoom"></google-map>
+    	</div>
+  	</script>
+  	<script type="text/ng-template" id="page2">
+    	<div class="row">
+    		<h4 class="lscs-manager" style="margin-left: 15px"><span class="lscs-header-icon-sub"><i class="fi-results"></i></span> &nbsp;List of Surveyors</h4>
+    	</div>
+    	<div class="row">
+    		<table class="lscs-table-sub">
+			  <thead>
+			    <tr>
+			      <th width="200">User ID</th>
+			      <th>Surveyor Name</th>
+			      <th width="200">Surveyor Username</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <td>Content Goes Here</td>
+			      <td>This is longer content Donec id elit non mi porta gravida at eget metus.</td>
+			      <td>Content Goes Here</td>
+			    </tr>
+			    <tr>
+			      <td>Content Goes Here</td>
+			      <td>This is longer Content Goes Here Donec id elit non mi porta gravida at eget metus.</td>
+			      <td>Content Goes Here</td>
+			    </tr>
+			    <tr>
+			      <td>Content Goes Here</td>
+			      <td>This is longer Content Goes Here Donec id elit non mi porta gravida at eget metus.</td>
+			      <td>Content Goes Here</td>
+			    </tr>
+			  </tbody>
+			</table>
+    	</div>
+  	</script>
+</div>
+
+
