@@ -39,3 +39,91 @@
    -o-border-radius: 150px;
     border-radius: 150px;
 }
+
+.full-width {
+   width: 100%;
+   margin-left: auto;
+   margin-right: auto;
+   max-width: initial;
+}
+
+.lscs-manager {
+  padding-left: 10px;
+  margin-bottom: -10px;
+}
+
+.lscs-panel {
+  width: 275px;
+  margin-left: 25px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border:1px solid #A8A8A8;
+  background-color: #A8A8A8;
+  color: #FFFFFF;
+}
+
+.lscsSelected {
+  border:1px solid #FF6347 !important;
+  background-color: #FF6347 !important;
+}
+
+.lscs-panel-create {
+  width: 275px;
+  margin-left: 25px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.lscs-panel-inner {
+  padding: 15px;
+}
+
+.lscs-small {
+  color: #FFFFFF;
+}
+
+.lscs-table {
+  background-color: #A8A8A8;
+  border-color: #A8A8A8;
+}
+
+.lscs-header {
+  font-size: 25px;
+}
+
+.lscs-subheader {
+  font-size: 65px;
+}
+
+.lscs-subheader span {
+  font-size: 75px;
+  float: right;
+}
+
+.lscs-row-button {
+  float: left;
+}
+
+.lscs-create-survey {
+  color: #33CC33;
+  text-align: center;
+  font-size: 65px;
+}
+
+.lscs-create-survey-sub {
+  text-align: center;
+}
+
+.lscs-header-icon {
+   color: #A8A8A8;
+}
+
+.lscs-header-icon-sub {
+  color: #FF0000;
+}
+
+.lscs-table-sub {
+  margin-left: 15px;
+  margin-top: 15px;
+}
