@@ -5,8 +5,9 @@ from rest_framework.permissions import AllowAny
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from models import Employee, ChecklistTemplate, Checklist
-from serializers import EmployeeSerializer, ChecklistSerializer, EmployeeInfoSerializer
+from serializers import EmployeeSerializer, ChecklistGetSerializer, ChecklistPostSerializer, EmployeeInfoSerializer
 import server
+import datetime
 
 
 
@@ -65,7 +66,7 @@ class ChecklistModify(generics.ListCreateAPIView):
     POST - provided the id of the checklist, modify all information relate to it.
     """
     authentication_classes = (TokenAuthentication,)
-    serializer_class = ChecklistSerializer
+    serializer_class = ChecklistGetSerializer
 
     def get(self, request, *args, **kwargs):
         checklistID = int(kwargs["checklistID"])
@@ -81,15 +82,20 @@ class ChecklistModify(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         if request.user.role != '1':
             return Response({"error":"Only managers can modify checklists"}, status=status.HTTP_403_FORBIDDEN)
-        serializer = ChecklistSerializer(data=request.DATA);
+        serializer = ChecklistPostSerializer(data=request.DATA);
         if serializer.is_valid():
             checklist = Checklist.objects.get(pk=kwargs['checklistID'])
             checklist.title = serializer.data["title"]
             checklist.description = serializer.data["description"]
             checklist.json_contents = serializer.data["json_contents"]
             checklist.assignee = Employee.objects.get(pk=serializer.data["assignee"])
+            checklist.address = serializer.data["address"]
+            checklist.district = serializer.data["district"]
+            checklist.date=datetime.date.today()
             checklist.save()
             return Response('update')
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ChecklistView(generics.ListCreateAPIView):
     """
@@ -108,7 +114,7 @@ class ChecklistView(generics.ListCreateAPIView):
 
     """
     authentication_classes = (TokenAuthentication,)
-    serializer_class = ChecklistSerializer
+    serializer_class = ChecklistGetSerializer
 
     def get_queryset(self):
         if self.request.user.role == '2':
@@ -126,7 +132,7 @@ class ChecklistView(generics.ListCreateAPIView):
         """
         if request.user.role != '1':
             return Response({"error":"Only managers can create new checklists"}, status=status.HTTP_403_FORBIDDEN)
-        serializer = ChecklistSerializer(data=request.DATA)
+        serializer = ChecklistPostSerializer(data=request.DATA)
         if serializer.is_valid():
             checklist = Checklist.objects.create(
                     title=serializer.data["title"],
@@ -134,7 +140,10 @@ class ChecklistView(generics.ListCreateAPIView):
                     json_contents=serializer.data["json_contents"],
                     template=ChecklistTemplate.objects.get(pk=serializer.data["template"]),
                     assignee=Employee.objects.get(pk=serializer.data["assignee"]),
-                    assigner=request.user
+                    assigner=request.user,
+                    address=serializer.data["address"],
+                    district=serializer.data["district"],
+                    date=datetime.date.today()
                 )
             checklist.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

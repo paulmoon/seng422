@@ -2,22 +2,49 @@
 <hr />
 <div class="row">
   <div align="center" ng-controller="SurveyorCtrl">
+
       <table>
           <tr>
-              <td>
-                  Title
-              </td>
-              <td>
-                  Assigner
-              </td>
-              <td>
-                  Date
-              </td>
-              <td>
-                  Description
-              </td>
+              <th>
+                  File #
+              </th>
+
+              <th>
+                  <a href="" ng-click="predicate = 'title'; reverse=false">
+                    Title
+                  </a>
+              </th>
+
+              <th>
+                  <a href="" ng-click="predicate = 'assigner'; reverse=false">
+                    Assigner
+                  </a>
+              </th>
+              <th>
+                  <a href="" ng-click="predicate = 'date'; reverse=false">
+                    Date
+                  </a>
+              </th>
+              <th>
+                  <a href="" ng-click="predicate = 'district'; reverse=false">
+                    Land District
+                  </a>
+              </th>
+              <th>
+                  <a href="" ng-click="predicate = 'address'; reverse=false">
+                    Address or location
+                  </a>
+              </th>
+              <th>
+                  <a href="" ng-click="predicate = 'description'; reverse=false">
+                    Description
+                  </a>
+              </th>
           </tr>
-          <tr ng-repeat="cl in cls">
+          <tr ng-repeat="cl in cls | orderBy:predicate:reverse">
+              <td>
+                  {{ $index }}
+              </td>
               <td>
                   {{ cl.title }}
               </td>
@@ -25,7 +52,13 @@
                   {{ cl.assigner.first_name}} {{ cl.assigner.last_name}}
               </td>
               <td>
-                  ????
+                  {{ cl.date }}
+              </td>
+              <td>
+                  {{ cl.district }}
+              </td>
+              <td>
+                  {{ cl.address }}
               </td>
               <td>
                   {{ cl.description }}
