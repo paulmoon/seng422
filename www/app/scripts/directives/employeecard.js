@@ -7,7 +7,7 @@
  * # employeecard
  */
 angular.module('lscsClientApp')
-  .directive('employeecard', function () {
+  .directive('ngEmployeecard', function () {
     return {
         templateUrl: "scripts/directives/employeecard.html",
         restrict: 'E',

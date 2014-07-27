@@ -7,7 +7,7 @@
  * # EmployeeList
  */
 angular.module('lscsClientApp')
-  .directive('EmployeeList', function () {
+  .directive('ngEmployeelist', function ($rootScope, $http) {
     return {
         templateUrl: 'scripts/directives/employeelist.html',
         restrict: 'E',
@@ -17,14 +17,15 @@ angular.module('lscsClientApp')
         },
         controller: ['$scope', function($scope) {
             $scope.employees = [];
-            var init = function() {
+            $scope.init = function() {
                 $http.get('http://localhost:8000/employees/').success(function (data) {
                     angular.forEach(data, function (value) {
                         $scope.employees.push(value);
                     });
                 })
             };
-            timer(init, 0);
+            $scope.init();
+            console.log($scope.employees);
         }]
     };
   });
