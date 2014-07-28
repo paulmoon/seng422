@@ -25,7 +25,6 @@ angular.module('lscsClientApp')
                 })
             };
             $scope.init();
-            console.log($scope.employees);
         }]
     };
   });

@@ -6,7 +6,8 @@ angular
     'ngResource',
     'ngSanitize',
     'ngRoute',
-    'mm.foundation',
+//    'mm.foundation',
+    'ui.bootstrap',
     'google-maps'
   ])
   .constant('setting', {apiurl: 'http://localhost:8000'})
