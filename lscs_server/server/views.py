@@ -15,14 +15,45 @@ class EmployeeViewSet(viewsets.ViewSet):
     permission_classes = (AllowAny,)
     def list(self, request):
         queryset = Employee.objects.all()
-        serializer = EmployeeSerializer(queryset, many=True)
+        serializer = EmployeeInfoSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
         queryset = Employee.objects.all()
         employee = get_object_or_404(queryset, pk=pk)
-        serializer = EmployeeSerializer(employee)
+        serializer = EmployeeInfoSerializer(employee)
         return Response(serializer.data)
+
+class EmployeeModifyView(generics.CreateAPIView):
+    """
+    This view provides an endpoint to modify existing users
+    """    
+    authentication_classes = (TokenAuthentication,)
+
+    def post(self, request, *args, **kwargs):
+        if self.request.user.role == 0:
+            return Response({"error":"Only admins or the user themself can modify the user"}, status=status.HTTP_403_FORBIDDEN)
+        
+        employee_id = kwargs['employeeID']
+        if self.request.user.role == 2 and self.request.user.id != employee_id:
+            return Response({"error":"Cannot modify another surveyor unless an admin"}, status=status.HTTP_403_FORBIDDEN)
+
+        serializer = EmployeeSerializer(data=request.DATA)
+        employee = Employee.objects.get(pk=employee_id)
+        if 'username' in request.DATA.keys():
+            employee.username = serializer.init_data["username"]
+        if 'email' in request.DATA.keys():
+            employee.email = serializer.init_data["email"]
+        if 'first_name' in request.DATA.keys():
+            employee.first_name = serializer.init_data["first_name"]
+        if 'last_name' in request.DATA.keys():
+            employee.last_name = serializer.init_data["last_name"]
+        if 'role' in request.DATA.keys():
+            employee.role = serializer.init_data["role"]
+        if "password" in request.DATA.keys():
+            employee.set_password(serializer.init_data["password"])
+        employee.save()
+        return Response(status=status.HTTP_200_OK)
 
 class RegisterEmployeeView(generics.CreateAPIView):
     """

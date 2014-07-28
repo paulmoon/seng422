@@ -17,9 +17,11 @@ angular.module('lscsClientApp')
         },
         controller: ['$scope', function($scope) {
             $scope.employees = [];
+            var roles = ["Admin", "Manager", "Surveyor"];
             $scope.init = function() {
                 $http.get('http://localhost:8000/employees/').success(function (data) {
                     angular.forEach(data, function (value) {
+                        value.role = roles[value.role];
                         $scope.employees.push(value);
                     });
                 })
