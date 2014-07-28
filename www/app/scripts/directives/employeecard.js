@@ -13,9 +13,6 @@ angular.module('lscsClientApp')
         restrict: 'E',
         scope: {
             employee:"="
-        },
-        controller: ['$scope', function($scope) {
-
-        }]
+        }
     };
   });
