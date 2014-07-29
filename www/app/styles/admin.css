@@ -2,12 +2,12 @@
 .employee-panel {
     width: 50%;
     height: 500px;
-    float: left;
+    /*float: left;*/
 }
 
 .employee-preview {
     background-color: #FF0000;
-    float: left;
+    /*float: left;*/
     width: 50%;
     height: 500px;
 }
