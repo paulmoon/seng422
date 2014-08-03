@@ -1,28 +1,40 @@
 'use strict';
 
 angular.module('lscsClientApp')
-  .controller('HeaderCtrl', function ($scope, $http, setting, appAuthorize, $location) {
-  	var url = setting.apiurl + "/authorize_token/";
-  	if(appAuthorize.isLoggedIn() == true){
-  		$http.get(url)
-	  	.success(function(data){
-	  		$scope.fullname = {
-	  			firstname: data.first_name,
-	  			lastname: data.last_name
-	  		}
-	  	})
-	  	.error(function(data){
-	  		console.log('Error: ' + data);
-	  	})
-  	} else {
-  		$location.path("/login");
-  	}
-  	$scope.logout = function(){
-  		appAuthorize.logout();
-  	}
+  .controller('HeaderController', function ($scope, $http, setting, appAuthorize, $location) {
+    console.log("I AM A HEADER CONTROLLER");
+
+    $scope.loggedIn = appAuthorize.isLoggedIn();
+
+    if ($scope.loggedIn === true) {
+      console.log('Redirecting...');
+
+      
+      // if (data.role === 0) {
+      //   $location.path('/admin');
+      // } else if (data.role === 1) {
+      //   $location.path('/manager');
+      // } else if(data.role === 2) {
+      //   $location.path('/surveyor');
+      // }
+    } else {
+      $location.path('/');
+    }
+
+    $scope.login = function() {
+      var sendData = {
+        'username': this.username,
+        'password': this.password
+      };
+      appAuthorize.login(sendData);
+    };
+
+    $scope.logout = function() {
+      appAuthorize.logout();
+    };
   })
   .directive('myName', function() {
-  	return {
-  		template: '{{fullname.firstname}} {{fullname.lastname}}'
-  	};
+    return {
+      template: '{{fullname.firstname}} {{fullname.lastname}}'
+    };
   });

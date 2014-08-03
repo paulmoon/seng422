@@ -1,13 +1,7 @@
 'use strict';
 
 angular.module('lscsClientApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.actives = [
-      { title: "Forests Report", content: "Some report about forests"},
-      { title: "Norwhales Report", content: "motherfucking nowhales!!!!"}
-    ];
+  .controller('MainCtrl', function ($scope, $http, setting, $cookieStore, $location, appAuthorize, $q) {
 
-    $scope.finished = [
-      { title: "Finsihed stuff", content: "got some stuff finished"}
-    ];
-  });
+    console.log("Testing.");
+});

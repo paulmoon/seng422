@@ -1,33 +1,12 @@
 <div ng-include src="'views/header.html'"></div>
-<div class="row"></div>
-<hr />
-<div class="row">
-  <div ng-controller="MainCtrl">
-    <tabset class="weather-tabset">
-      <tab>
-        <tab-heading>
-          <i class="fi-clock"></i> Active Projects
-        </tab-heading>
-        <div ng-repeat="active in actives">
-          <div class="panel weather-panel">
-          {{active.title}}
-          <p>{{active.content}}</p>
-          </div>
-          <hr/>
-        </div>
-      </tab>
-      <tab>
-        <tab-heading>
-          <i class="fi-star"></i> Finished Projects
-        </tab-heading>
-        <div ng-repeat="finish in finished">
-          <div class="panel weather-panel">
-          {{finish.title}}
-          <p>{{finish.content}}</p>
-          </div>
-          <hr/>
-        </div>
-      </tab>
-    </tabset>
+
+<div ng-controller="MainCtrl">
+  <div class="row text-center">
+    <h1>
+      Team Cersei
+    </h1>
+  </div>
+  <div class="weather-circle row text-center">
+    <img src="images/front.jpg">
   </div>
 </div>
