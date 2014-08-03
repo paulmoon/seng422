@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('lscsClientApp')
-  .controller('AdminCtrl', function ($scope, appAuthorize, $location, setting, $http, $modal) {
+  .controller('AdminCtrl', function ($rootScope, $scope, appAuthorize, $location, setting, $http, $modal) {
         var url = setting.apiurl + "/authorize_token/";
         if(appAuthorize.isLoggedIn() == true){
             $http.get(url)
@@ -20,7 +20,7 @@ angular.module('lscsClientApp')
         $scope.openCreate = function() {
             var modalInstance = $modal.open({
                 templateUrl: 'scripts/directives/newEmployeeModal.html',
-                controller: ['$scope', '$modalInstance', function($scope, $modalInstance) {
+                controller: ['$rootScope', '$scope', '$modalInstance', function($rootScope, $scope, $modalInstance) {
                     $scope.roles = ["Admin", "Manager", "Surveyor"];
                     $scope.newEmployee = {}
                     $scope.newEmployee.role = $scope.roles[0];
@@ -35,10 +35,12 @@ angular.module('lscsClientApp')
                 }]
             });
 
-            modalInstance.result.then(function(newEmployee) {
-                $http.post('http://localhost:8000/register/', newEmployee)
+            modalInstance.result.then(function(sendEmployee) {
+                console.log(sendEmployee);
+                $http.post('http://localhost:8000/register/', sendEmployee)
                     .success(function() {
                         console.log("Created new employee");
+                        $rootScope.broadcast('newEmployeeCreated', sendEmployee);
                     }).error(function() {
                         console.log("Could not create employee");
                     });

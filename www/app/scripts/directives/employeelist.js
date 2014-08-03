@@ -15,7 +15,7 @@ angular.module('lscsClientApp')
         scope: {
 
         },
-        controller: ['$scope', function($scope) {
+        controller: ['$rootScope', '$scope', function($rootScope, $scope) {
             $scope.employees = [];
             var roles = ["Admin", "Manager", "Surveyor"];
             $scope.init = function() {
@@ -27,6 +27,11 @@ angular.module('lscsClientApp')
                 })
             };
             $scope.init();
+
+
+            $rootScope.$on('newEmployeeCreated', function(event, employee) {
+                $scope.employees.push(employee);
+            });
         }]
     };
   });

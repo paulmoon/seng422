@@ -48,6 +48,7 @@ angular.module('lscsClientApp')
                        .success(function(status) {
                            console.log("Updated employee info");
                            $scope.employee.role = roles[$scope.employee.role];
+
                        })
                        .error(function (data, status, headers, config) {
                            $scope.employee.role = roles[$scope.employee.role];
