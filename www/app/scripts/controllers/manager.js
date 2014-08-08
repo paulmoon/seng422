@@ -161,9 +161,12 @@ angular.module('lscsClientApp')
   })
   .directive("ngWeather", function(){
 	return {
-		link: function(scope, element, attributes){
+		scope: {
+			locationMap: '='
+		},
+		link: function(scope, element, attributes, $http){
 		$.simpleWeather({
-	    location: 'Toront, ON',
+	    location: scope.locationMap,
 	    woeid: '',
 	    unit: 'f',
 	    success: function(weather) {

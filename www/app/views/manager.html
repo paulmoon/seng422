@@ -4,6 +4,7 @@
 	<hr />
 </div>
 <div ng-controller="ManagerCtrl">
+	<ng-konami></ng-konami>
 	<div class="row">
 		<div ng-repeat="headerTab in headerTabs" ng-click="select($index)" ng-class="{lscsSelected: $index == selected}" class="lscs-panel lscs-row-button">
 			<div class="lscs-panel-inner">

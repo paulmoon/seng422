@@ -2,10 +2,10 @@
     <h3 class="modal-title">{{items.title}} Weather and Location</h3>
 </div>
 <div class="modal-body">
-	<div ng-weather></div>
+	<div ng-weather location-map="items.address"></div>
 	<center>
-		<map zoom="11" center="[Toronto, ON]">
-			<marker position="[Toronto, ON]" title="Toronto, ON" animation="Animation.BOUNCE"></marker>
+		<map zoom="11" center="[{{items.address}}]">
+			<marker position="[{{items.address}}]" title="{{items.address}}" animation="Animation.BOUNCE"></marker>
 		</map>
 	</center>
 </div>
