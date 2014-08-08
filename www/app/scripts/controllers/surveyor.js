@@ -20,6 +20,33 @@ angular.module('lscsClientApp')
         $http.get(cl_url)
         .success(function(data){
             $scope.cls = data
+
+        $scope.selectAll = function(){
+          if ($scope.itemAll){
+            $scope.itemAll = false;
+          } else {
+            $scope.itemAll = true;
+          } 
+          angular.forEach($scope.cls, function(cl){
+            cl.Selected = $scope.itemAll;
+          });
+        };
+        $scope.submit = function(){
+          var checkbox;
+          var cl_num_url;
+          var temp;
+          for(var i =0; i<data.length; i++){ 
+            checkbox = document.getElementById(i);
+            if(checkbox.checked){
+              cl_num_url = setting.apiurl + "/checklist/"+data[i].id;
+              temp = $scope.cls[i];
+              temp.assignee = temp.assignee.id
+              temp.assigner = temp.assigner.id
+              $http.post(cl_num_url, temp)
+            }
+          };
+        };
+
         })
         .error(function(data){
             console.log('Error' + data);
