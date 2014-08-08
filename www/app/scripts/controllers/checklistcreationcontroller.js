@@ -58,14 +58,16 @@ angular.module('lscsClientApp')
                     $scope.checklist.title = information.header.title;
                     $scope.checklist.description = information.header.description;
                     $scope.checklist.filenumber = information.header.filenumber;
-                    $scope.checklist.landDistrict = information.header.landDistrict;
-                    $scope.checklist.json_contents = "";
-                    $scope.checklist.assignee = $scope.s.surveyor.id;
+                    $scope.checklist.district = information.header.landDistrict;
+                    $scope.checklist.json_contents = {};
+                    $scope.checklist.assignee = $scope.s.surveyor.id.toString();
                     $scope.checklist.status = 'P';
-                    $scope.checklist.address = "1234";
+                    $scope.checklist.address = "Toronto, ON";
+                    $scope.checklist.template = "1";
                     angular.forEach(information.inputs, function(value) {
-                        $scope.checklist.json_contents += value.label + "|";
+                        $scope.checklist.json_contents[value.label] = "0";
                     });
+                    $scope.checklist.json_contents = JSON.stringify($scope.checklist.json_contents);
                     console.log($scope.checklist);
                     $modalInstance.close($scope.checklist);
                 };
@@ -84,7 +86,6 @@ angular.module('lscsClientApp')
                    console.log("Error creating checklist");
                });
         });
-
     };
   }).
     directive('checklistInput', function($compile, stateService) {
