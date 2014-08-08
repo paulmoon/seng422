@@ -8,7 +8,7 @@
  * Controller of the angWeatherAppApp
  */
 angular.module('lscsClientApp')
-  .controller('ChecklistCreationCtrl', function ($scope, $modal, $http) {
+  .controller('ChecklistCreationCtrl', function ($scope, $modal, $http, $location) {
     $scope.inputs = [];
 
     $scope.newChecklist = function() {
@@ -27,7 +27,8 @@ angular.module('lscsClientApp')
         title: "Title",
         description: "Description",
         filenumber: "File #",
-        landDistrict: "Land District"
+        landDistrict: "Land District",
+        address: "Address"
     };
     $scope.createSurvey = function() {
         var modalInstance = $modal.open({
@@ -62,7 +63,7 @@ angular.module('lscsClientApp')
                     $scope.checklist.json_contents = {};
                     $scope.checklist.assignee = $scope.s.surveyor.id.toString();
                     $scope.checklist.status = 'P';
-                    $scope.checklist.address = "Toronto, ON";
+                    $scope.checklist.address = information.header.address;
                     $scope.checklist.template = "1";
                     angular.forEach(information.inputs, function(value) {
                         $scope.checklist.json_contents[value.label] = "0";
@@ -82,6 +83,7 @@ angular.module('lscsClientApp')
            $http.post("http://localhost:8000/checklist/", checklist)
                .success(function() {
                    console.log("Successfully created the checklist");
+                   $location.path("/manager");
                }).error(function() {
                    console.log("Error creating checklist");
                });

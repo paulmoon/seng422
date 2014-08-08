@@ -13,7 +13,7 @@
     "simpleWeather": "3.0.2",
     "angular-bootstrap": "0.11.0",
     "bootstrap": "3.2.0",
-    "ngmap": "0.15.3"
+    "ngmap": "0.15.0"
   },
   "devDependencies": {
     "angular-mocks": "1.2.15",
