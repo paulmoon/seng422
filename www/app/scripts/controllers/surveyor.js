@@ -78,16 +78,22 @@ angular.module('lscsClientApp')
             $scope.json_contents[question] = answer;
           };
 
-          $scope.submitChecklist = function() {
-            var returned = {
+          $scope.saveChecklist = function() {
+            var saved = {
               json_contents: JSON.stringify($scope.json_contents),
-              status: 'Active'
+              status: 'P'
             };
 
-            console.log(returned);
-            console.log('Submitting a checklist');
-            console.log($scope.checklist);
-            $modalInstance.close($scope.checklist);
+            $modalInstance.close({id: $scope.checklist.id, savedContents: saved});
+          };
+
+          $scope.submitChecklist = function() {
+            var saved = {
+              json_contents: JSON.stringify($scope.json_contents),
+              status: 'C'
+            };
+
+            $modalInstance.close({id: $scope.checklist.id, savedContents: saved});
           };
 
           $scope.cancel = function() {
@@ -96,8 +102,8 @@ angular.module('lscsClientApp')
       }]
     });
 
-    modalInstance.result.then(function(checklist) {
-      $http.post('http://localhost:8000/checklist/' + checklist.id, checklist)
+    modalInstance.result.then(function(savedChecklist) {
+      $http.post('http://localhost:8000/checklist/' + savedChecklist.id, savedChecklist.savedContents)
         .success(function() {
             console.log('Successfully changed the checklist');
         }).error(function() {

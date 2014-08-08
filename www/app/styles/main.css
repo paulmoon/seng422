@@ -169,7 +169,7 @@
   text-transform: uppercase;
 }
 
-i {
+.weather-icon {
   color: #000;
   font-family: weather;
   font-size: 150px;

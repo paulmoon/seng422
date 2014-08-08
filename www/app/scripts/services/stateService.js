@@ -14,11 +14,6 @@ angular.module('lscsClientApp')
       });
     };
 
-    // this.submitChecklist = function(checklist) {
-        
-    // }
-
-
     this.getSelectedChecklist = function() {
         return selectedChecklist;
     };

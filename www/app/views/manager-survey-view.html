@@ -1,14 +1,34 @@
-<div class="modal-header">
-    <h3 class="modal-title">{{items.title}}</h3>
+<div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">Edit Checklist: {{checklist.title}}</h3>
+    </div>
+    <div class="modal-body">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Question</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="(question, answer) in json_contents">
+            <td>{{question}}</td>
+            <td>
+                <div>
+                    <input style="margin: 3px;" type="radio" value="Unanswered" ng-change="saveAnswer(question, answer)" ng-model="answer">Unanswered</input>
+                    <input style="margin: 3px;" type="radio" value="Complete" ng-change="saveAnswer(question, answer)" ng-model="answer">Complete</input>
+                    <input style="margin: 3px;" type="radio" value="Incomplete" ng-change="saveAnswer(question, answer)" ng-model="answer">Incomplete</input>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+    </div>
+  </div>
 </div>
-<div class="modal-body">
-    <ul>
-        <li ng-repeat="item in items">
-            <a ng-click="selected.item = item">{{ item }}</a>
-        </li>
-    </ul>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()">OK</button>
-    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-</div>
+
