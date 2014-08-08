@@ -75,7 +75,7 @@
             {{ cl.description }}
           </td> 
           <td>
-            <span ng-class="{yellow: cl.status == 'P', green: cl.status =='C'}"> 
+            <span ng-class="{yellow: cl.status == 'P', green: cl.status =='C', black: cl.status == 'I'}">
               <span ng-if="cl.status == 'C'">
                 Complete
               </span>
