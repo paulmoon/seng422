@@ -23,10 +23,7 @@ angular.module('lscsClientApp')
 
 	  			modalInstance.result.then(function (data) {
 				  $scope.pd = data;
-				  $http.post(setting.apiurl + "/employee/" + data.id + "/", data)
-				  .success(function(data){
-				  	console.log("im here" + data);
-				  })	
+				  $http.post(setting.apiurl + "/employee/" + data.id + "/", data)	
 				  .error(function(data){
 				  	console.log("error " + data);
 				  });
