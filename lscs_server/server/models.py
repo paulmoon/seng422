@@ -34,6 +34,12 @@ class ChecklistTemplate(models.Model):
     json_contents = models.TextField()
 
 class Checklist(models.Model):
+    STATUS_C = (
+        ('I', 'Initialized'),
+        ('P', 'Pending'),
+        ('C', 'Completed')
+    )
+
     title = models.CharField(max_length=100)
     description = models.TextField()
     json_contents = models.TextField()
@@ -42,4 +48,5 @@ class Checklist(models.Model):
     assigner = models.ForeignKey(Employee, related_name="assigner", null=True, blank=True)
     assignee = models.ForeignKey(Employee, related_name="assignee", null=True, blank=True)
     template = models.ForeignKey(ChecklistTemplate, related_name="template", null=True, blank=True)
+    status = models.CharField(max_length=1, choices=STATUS_C);
     date = models.DateField()

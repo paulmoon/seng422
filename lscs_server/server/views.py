@@ -122,6 +122,7 @@ class ChecklistModify(generics.ListCreateAPIView):
             checklist.assignee = Employee.objects.get(pk=serializer.data["assignee"])
             checklist.address = serializer.data["address"]
             checklist.district = serializer.data["district"]
+            checklist.status = serializer.data["status"]
             checklist.date=datetime.date.today()
             checklist.save()
             return Response('update')
