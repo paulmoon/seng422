@@ -7,7 +7,7 @@ angular
     'ngSanitize',
     'ngRoute',
     'ui.bootstrap',
-    'google-maps'
+    'ngMap'
   ])
   .constant('setting', {apiurl: 'http://localhost:8000'})
   .factory('appAuthorize', function ($cookieStore, $http, $location, setting){
@@ -75,8 +75,11 @@ angular
         templateUrl: 'views/profile.html',
         controller: 'ProfileCtrl'
       })
+      .when('/checklistCreation', {
+        templateUrl: 'views/checklistCreation.html',
+        controller: 'ChecklistCreationCtrl'
+      })
       .otherwise({
         templateUrl: 'views/main.html'
-        
       });
   });

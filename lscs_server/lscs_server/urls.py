@@ -22,5 +22,8 @@ urlpatterns = patterns('',
     url(r'^template/(?P<templateID>[0-9]+)/?$', views.ChecklistTemplateUpdateView.as_view()),
     url(r'^template/(?P<templateID>[0-9]+)/?$', views.ChecklistTemplateDeactivateView.as_view()),
     url(r'^employee/(?P<employeeID>[0-9]+)/?$', views.EmployeeModifyView.as_view()),
+    url(r'^checklist/(?P<checklistID>[0-9]+)/status/?$', views.ChecklistStatusChangeView.as_view()),
+    url(r'^checklist/(?P<checklistID>[0-9]+)/delete/?$', views.ChecklistDeleteView.as_view()),
+    url(r'^surveyors/?$', views.EmployeeSurveyorView.as_view())
 )
 
