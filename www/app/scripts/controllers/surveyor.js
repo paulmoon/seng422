@@ -4,7 +4,7 @@ angular.module('lscsClientApp')
 .controller('SurveyorCtrl', function ($scope, appAuthorize, $location, setting, $http, $modal, stateService) {
   var url = setting.apiurl + "/authorize_token/";
   // $scope.json_contents = JSON.parse("{\"Question 1\": \"Very first question\", \"Question 2\": \"Second question??\", \"Question 3\": \"LAST QUESTION\"}");
-  $scope.json_contents = [];
+  $scope.cls = [];
 
   if (appAuthorize.isLoggedIn()) {
     $http.get(url)
@@ -42,10 +42,7 @@ angular.module('lscsClientApp')
           checkbox = document.getElementById(i);
           if (checkbox.checked) {
             cl_num_url = setting.apiurl + "/checklist/" + data[i].id;
-            temp = $scope.cls[i];
-            temp.assignee = temp.assignee.id;
-            temp.assigner = temp.assigner.id;
-            $http.post(cl_num_url, temp);
+            $http.post(cl_num_url, $scope.cls[i]);
           }
         }
       };
@@ -84,7 +81,22 @@ angular.module('lscsClientApp')
               status: 'P'
             };
 
-            $modalInstance.close({id: $scope.checklist.id, savedContents: saved});
+            console.log($scope.cls);
+
+            for (var i = 0; i < $scope.cls.length; i++) {
+              if ($scope.cls[i].id == $scope.checklist.id) {
+                $scope.cls[i].status = 'P';
+                console.log("CHANGED");
+                break;
+              }
+            }
+
+            $modalInstance.close(
+              {
+                id: $scope.checklist.id,
+                savedContents: saved
+              }
+            );
           };
 
           $scope.submitChecklist = function() {
@@ -93,7 +105,12 @@ angular.module('lscsClientApp')
               status: 'C'
             };
 
-            $modalInstance.close({id: $scope.checklist.id, savedContents: saved});
+            $modalInstance.close(
+              {
+                id: $scope.checklist.id,
+                savedContents: saved
+              }
+            );
           };
 
           $scope.cancel = function() {
