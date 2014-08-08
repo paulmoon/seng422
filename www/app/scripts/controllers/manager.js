@@ -139,13 +139,6 @@ angular.module('lscsClientApp')
 	  $log.info('Modal dismissed at: ' + new Date());
 	});
 	};
-	$scope.map = {
-	    center: {
-	        latitude: 45,
-	        longitude: -73
-	    },
-	    zoom: 9
-	};
   })
   .directive("ngWeather", function(){
 	return {
