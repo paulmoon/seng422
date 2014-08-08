@@ -22,62 +22,79 @@ angular.module('lscsClientApp')
   	}
 
   	$http.get(url_employee)
-  	.success(function(data){
+  	.success(function(empdata){
+  		var employeeCount = 0;
   		$scope.EmployeeList = [];
-  		angular.forEach(data, function(item){
+  		angular.forEach(empdata, function(item){
   			if(item.role == 2){
   				$scope.EmployeeList.push(item);
+  				employeeCount++;
   			}
   		});
-  	})
-  	.error(function(data){
-
-  	});
-
-
-  	$http.get(url_checklist)
-  	.success(function(data){
-  		$scope.CompletedList = [];
-  		$scope.OngoingList = [];
-  		
-  		angular.forEach(data, function(item){
-  			if(item.status == 'C') {
-  				$scope.CompletedList.push(item);
-  			} else {
-  				$scope.OngoingList.push(item);
-  			}
-  		});
-  	})
-  	.error(function(data){
-  		console.log('Error' + data);
-  	});
-
-  	$scope.headerTabs = [
+  		$http.get(url_checklist)
+	  	.success(function(data){
+	  		$scope.CompletedList = [];
+	  		$scope.OngoingList = [];
+	  		var completedCount = 0,
+	  		ongoingCount = 0;
+	  		angular.forEach(data, function(item){
+	  			if(item.status == 'C') {
+	  				$scope.CompletedList.push(item);
+	  				completedCount++;
+	  			} else {
+	  				$scope.OngoingList.push(item);
+	  				ongoingCount++;
+	  			}
+	  		});
+	  		$scope.headerTabs = [
             {
                 'headerTabId': 1,
                 'header': 'Ongoing Surveys',
                 'icon': 'glyphicon-time',
+                'count': ongoingCount,
             },
             {
                 'headerTabId': 2,
                 'header': 'Completed Surveys',
                 'icon': 'glyphicon-ok',
+                'count': completedCount,
             },
             {
                 'headerTabId': 3,
                 'header': 'Surveyors',
                 'icon': 'glyphicon-user',
+                'count': employeeCount,
             }
         ];
-    $scope.selected = 0;
-    $scope.template = 'page' + 0;
+	    $scope.selected = 0;
+	    $scope.template = 'page' + 0;
 
-    $scope.select= function(index) {
-       $scope.selected = index;
-       $scope.template = 'page' + index;
-    };
+	    $scope.select= function(index) {
+	       $scope.selected = index;
+	       $scope.template = 'page' + index;
+	    };
+	  	})
+	  	.error(function(data){
+	  		console.log('Error ' + data);
+	  	});
+  	})
+  	.error(function(empdata){
+  		console.log('Error ' + empdata);
+  	});
+
 
 	$scope.items = ['item1', 'item2', 'item3'];
+
+	$scope.delete_survey = function (id) {
+		var url_survey_delete = setting.apiurl + '/checklist/' + id;
+		$http.delete(url_survey_delete)
+		.success(function(data){
+			console.log(id + ' has been deleted.');
+		})
+		.error(function(data){
+			console.log('Error: ' + data);
+		});
+	}
 
 	$scope.open_survey = function (checklist) {
 		var modalInstance = $modal.open({
