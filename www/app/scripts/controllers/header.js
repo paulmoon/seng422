@@ -43,6 +43,10 @@ angular.module('lscsClientApp')
     $scope.logout = function() {
       appAuthorize.logout();
     };
+
+    $scope.profile = function() {
+        $location.path("/profile");
+    }
   })
   .directive('myName', function() {
     return {
