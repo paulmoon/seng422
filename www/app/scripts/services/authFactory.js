@@ -75,6 +75,10 @@ angular
         templateUrl: 'views/profile.html',
         controller: 'ProfileCtrl'
       })
+      .when('/checklistCreation', {
+        templateUrl: 'views/checklistCreation.html',
+        controller: 'ChecklistCreationCtrl'
+      })
       .otherwise({
         templateUrl: 'views/main.html'
       });

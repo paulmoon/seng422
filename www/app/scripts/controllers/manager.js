@@ -16,6 +16,11 @@ angular.module('lscsClientApp')
   			console.log('Error' + data);
   		});
   	}
+
+    $scope.openNewChecklist = function() {
+        $location.path("/checklistCreation");
+    };
+
   	$scope.headerTabs = [
             {
                 'headerTabId': 1,
