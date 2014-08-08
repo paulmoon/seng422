@@ -124,7 +124,7 @@ class ChecklistModify(generics.ListCreateAPIView):
             checklist.district = serializer.data["district"]
             checklist.date=datetime.date.today()
         checklist.json_contents = serializer.init_data["json_contents"]
-        cheklist.status = serializer.init_data["status"]
+        checklist.status = serializer.init_data["status"]
         checklist.save()
         return Response('update')
     # else:
