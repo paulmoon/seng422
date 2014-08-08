@@ -18,12 +18,16 @@
     </div>
     
     <div class="navbar-collapse collapse" ng-if="loggedIn">
-      <form name="logoutForm" class="navbar-form navbar-right" role="form"> 
-        <button type="submit" class="btn btn-success" ng-click="logout()">Sign out</button>
-      </form>
-      <form name="logoutForm" class="navbar-form navbar-right" role="form">
-          <button type="reset" class="btn btn-danger" ng-click="profile()">Profile</button>
-      </form>
+        <div class="btn-group navbar-form navbar-right" dropdown is-open="status.isopen">
+            <button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabled">
+                Settings <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#" ng-click="profile()">Profile</a></li>
+                <li class="divider"></li>
+                <li><a href="#" ng-click="logout()">Sign out</a></li>
+            </ul>
+        </div>
     </div>
   </div>
 </div>
