@@ -5,7 +5,8 @@ angular.module('lscsClientApp')
   	var url = setting.apiurl + "/authorize_token/";
   	var url_checklist = setting.apiurl + "/checklist/";
   	var url_employee = setting.apiurl + "/employees/";
-  	
+  	$scope.CompletedList = [];
+	$scope.OngoingList = [];
   	if(appAuthorize.isLoggedIn() == true){
   		$http.get(url)
   		.success(function(data){
@@ -37,8 +38,6 @@ angular.module('lscsClientApp')
   		});
   		$http.get(url_checklist)
 	  	.success(function(data){
-	  		$scope.CompletedList = [];
-	  		$scope.OngoingList = [];
 	  		var completedCount = 0,
 	  		ongoingCount = 0;
 	  		angular.forEach(data, function(item){
@@ -90,9 +89,15 @@ angular.module('lscsClientApp')
 	$scope.items = ['item1', 'item2', 'item3'];
 
 	$scope.delete_survey = function (id) {
-		var url_survey_delete = setting.apiurl + '/checklist/' + id;
+		var url_survey_delete = setting.apiurl + '/checklist/' + id +'/delete';
 		$http.delete(url_survey_delete)
 		.success(function(data){
+			angular.forEach($scope.CompletedList, function(item, index){
+	  			if(item.id == id){
+	  				$scope.CompletedList.splice(index, 1);
+	  			}
+	  		});
+
 			console.log(id + ' has been deleted.');
 		})
 		.error(function(data){
