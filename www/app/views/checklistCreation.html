@@ -1,24 +1,45 @@
 <div ng-include src="'views/header.html'"></div>
-<div class="row"></div>
+<div class="row">
+    <h1 class="lscs-manager" style="margin-left: 15px"><span class="lscs-header-icon"><span class="glyphicon glyphicon-list"></span></span> Checklist Creation</h1>
+</div>
 <hr />
 
 <div ng-controller="ChecklistCreationCtrl">
-    <div class="container-fluid">
-        <label>Title</label>
-        <input type="text" ng-model="header.title" placeholder="Title"/>
-        <label>Description</label>
-        <textarea class="form-control" ng-model="header.description" rows="3"></textarea>
-        <label>File #</label>
-        <input type="text" ng-model="header.filenumber" placeholder="File #"/>
-        <label>Land District</label>
-        <input type="text" ng-model="header.landDistrict" placeholder="Land District"/>
-        <label>Address</label>
-        <input type="text" ng-model="header.address" placeholder="Address"/>
-        <h1>Main Body</h1>
-        <div class="container-fluid">
-            <div checklist-input ng-repeat="input in inputs"/>
-            <button ng-click="newChecklist()">Create new checklist item</button>
-            <button ng-click="createSurvey()">Create Survey</button>
+    <div class="row">
+        <div class="container">
+            <div class="container-fluid">
+            <div class="panel panel-default">
+            <div class="panel-body">
+                <label>Title</label><br />
+                <input type="text" ng-model="header.title" placeholder="Title"/><br />
+                <label>Description</label><br />
+                <textarea class="form-control" ng-model="header.description" rows="3"></textarea><br />
+                <label>File Number</label><br />
+                <input type="text" ng-model="header.filenumber" placeholder="File Number"/><br />
+                <label>Land District</label><br />
+                <input type="text" ng-model="header.landDistrict" placeholder="Land District"/><br />
+                <label>Address</label><br />
+                <input type="text" ng-model="header.address" placeholder="Address"/><br />
+            </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <h1 class="lscs-manager" style="margin-left: 15px"><span class="lscs-header-icon"><span class="glyphicon glyphicon-th-list"></span></span> Main Body</h1>
+        <div class="container">
+            <div class="container-fluid">
+                    <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div checklist-input ng-repeat="input in inputs"/>
+                    </div>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-warning" ng-click="newChecklist()">Create new checklist item</button>
+                        <button class="btn btn-success" ng-click="createSurvey()">Create Survey</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
