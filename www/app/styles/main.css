@@ -1,7 +1,20 @@
 .weather-panel {
   width: 500px;
 }
+.yellow {
+    font-weight: bold;
+    color: #FFA500;
+}
 
+.black {
+    font-weight: bold;
+    color: black;
+}
+
+.green {
+    font-weight: bold;
+    color: green;
+}
 .weather-tab {
   border-top: 1px solid #ccc;
   border-right: 1px solid #ccc;

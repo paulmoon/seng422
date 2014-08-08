@@ -66,7 +66,7 @@ angular.module('lscsClientApp')
                     $scope.checklist.address = information.header.address;
                     $scope.checklist.template = "1";
                     angular.forEach(information.inputs, function(value) {
-                        $scope.checklist.json_contents[value.label] = "0";
+                        $scope.checklist.json_contents[value.label] = "Unanswered";
                     });
                     $scope.checklist.json_contents = JSON.stringify($scope.checklist.json_contents);
                     console.log($scope.checklist);
