@@ -1,28 +1,28 @@
 <div>
     <div class="modal-header">
-        <h3 class="modal-title">Edit User {{ employee.username }}</h3>
+        <h3 class="modal-title">Edit User {{ profileInfo.username }}</h3>
     </div>
     <div class="modal-body">
         <div class="form-group">
             <label for="employeeUsername">Username</label>
-            <input type="text" ng-model="profileInfo.username" required class="form-control" id="employeeUsernameInput" placeholder="Enter a username"
-                   ng-model="newEmployee.username" >
+            <input type="text" ng-model="profileInfo.username" required class="form-control" id="employeeUsernameInput" placeholder="Enter a username">
         </div>
         <div class="form-group">
             <label for="employeeEmail">Email</label>
-            <input type="email" ng-model="profileInfo.email" required class="form-control" placeholder="Email" ng-model="newEmployee.email">
+            <input type="email" ng-model="profileInfo.email" required class="form-control" placeholder="Email">
         </div>
         <div class="form-group">
             <label for="employeeFirstName">First Name</label>
-            <input type="text" ng-model="profileInfo.first_name" required class="form-control" placeholder="First Name"
-                   ng-model="newEmployee.first_name">
+            <input type="text" ng-model="profileInfo.first_name" required class="form-control" placeholder="First Name">
         </div>
         <div class="form-group">
             <label for="employeeLastName">Last Name</label>
-            <input type="text" ng-model="profileInfo.last_name" required class="form-control" placeholder="Last Name"
-                   ng-model="newEmployee.last_name">
+            <input type="text" ng-model="profileInfo.last_name" required class="form-control" placeholder="Last Name">
         </div>
-        
+        <div class="form-group">
+            <label for="employeePassword">New Passowrd</label>
+            <input type="password" ng-model="p.password" required class="form-control" placeholder="New Password">
+        </div>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" ng-click="ok()">Save Changes</button>

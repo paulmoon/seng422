@@ -1,3 +1,5 @@
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponseServerError
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, generics, status
 from rest_framework.authtoken.models import Token
@@ -103,7 +105,7 @@ class ChecklistModify(generics.ListCreateAPIView):
         checklistID = int(kwargs["checklistID"])
         try:
             checklist = Checklist.objects.get(pk=checklistID)
-            serializer = ChecklistSerializer(checklist)
+            serializer = ChecklistGetSerializer(checklist)
             return Response(serializer.data, status.HTTP_200_OK)
         except ObjectDoesNotExist:
             return Response("Checklist with id {} does not exist.".format(
@@ -114,20 +116,21 @@ class ChecklistModify(generics.ListCreateAPIView):
         if request.user.role == '0':
             return Response({"error":"Only managers can modify checklists"}, status=status.HTTP_403_FORBIDDEN)
         serializer = ChecklistPostSerializer(data=request.DATA);
-        if serializer.is_valid():
-            checklist = Checklist.objects.get(pk=kwargs['checklistID'])
-            if request.user.role == '1':
-                checklist.title = serializer.data["title"]
-                checklist.description = serializer.data["description"]
-                checklist.assignee = Employee.objects.get(pk=serializer.data["assignee"])
-                checklist.address = serializer.data["address"]
-                checklist.district = serializer.data["district"]
-                checklist.date=datetime.date.today()
-            checklist.json_contents = serializer.data["json_contents"]
-            checklist.save()
-            return Response('update')
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#        if serializer.is_valid():
+        checklist = Checklist.objects.get(pk=kwargs['checklistID'])
+        if request.user.role == '1':
+            checklist.title = serializer.data["title"]
+            checklist.description = serializer.data["description"]
+            checklist.assignee = Employee.objects.get(pk=serializer.data["assignee"])
+            checklist.address = serializer.data["address"]
+            checklist.district = serializer.data["district"]
+            checklist.date=datetime.date.today()
+        checklist.json_contents = serializer.init_data["json_contents"]
+        checklist.status = serializer.init_data["status"]
+        checklist.save()
+        return Response('update')
+    # else:
+    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ChecklistView(generics.ListCreateAPIView):
     """
@@ -217,7 +220,6 @@ class ChecklistTemplateView(generics.ListCreateAPIView):
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class ChecklistTemplateUpdateView(generics.UpdateAPIView):
     #TODO: Change for Authenication
     authentication_classes = (TokenAuthentication,)
@@ -257,6 +259,8 @@ class ChecklistTemplateDeactivateView(generics.DestroyAPIView):
     Delete a checklist provided its templateID. In our
     case we just mark the case as deactive.
     '''
+
+
     def delete(self, request, *args, **kwargs):
         template = None
         try:
