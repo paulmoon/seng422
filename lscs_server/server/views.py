@@ -114,20 +114,21 @@ class ChecklistModify(generics.ListCreateAPIView):
         if request.user.role == '0':
             return Response({"error":"Only managers can modify checklists"}, status=status.HTTP_403_FORBIDDEN)
         serializer = ChecklistPostSerializer(data=request.DATA);
-        if serializer.is_valid():
-            checklist = Checklist.objects.get(pk=kwargs['checklistID'])
-            if request.user.role == '1':
-                checklist.title = serializer.data["title"]
-                checklist.description = serializer.data["description"]
-                checklist.assignee = Employee.objects.get(pk=serializer.data["assignee"])
-                checklist.address = serializer.data["address"]
-                checklist.district = serializer.data["district"]
-                checklist.date=datetime.date.today()
-            checklist.json_contents = serializer.data["json_contents"]
-            checklist.save()
-            return Response('update')
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#        if serializer.is_valid():
+        checklist = Checklist.objects.get(pk=kwargs['checklistID'])
+        if request.user.role == '1':
+            checklist.title = serializer.data["title"]
+            checklist.description = serializer.data["description"]
+            checklist.assignee = Employee.objects.get(pk=serializer.data["assignee"])
+            checklist.address = serializer.data["address"]
+            checklist.district = serializer.data["district"]
+            checklist.date=datetime.date.today()
+        checklist.json_contents = serializer.init_data["json_contents"]
+        cheklist.status = serializer.init_data["status"]
+        checklist.save()
+        return Response('update')
+    # else:
+    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ChecklistView(generics.ListCreateAPIView):
     """
