@@ -81,5 +81,6 @@ angular
       })
       .otherwise({
         templateUrl: 'views/main.html'
+        
       });
   });

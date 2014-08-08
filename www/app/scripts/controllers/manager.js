@@ -3,6 +3,9 @@
 angular.module('lscsClientApp')
   .controller('ManagerCtrl', function ($scope, appAuthorize, $location, setting, $http, $modal, $log) {
   	var url = setting.apiurl + "/authorize_token/";
+  	var url_checklist = setting.apiurl + "/checklist/";
+  	var url_employee = setting.apiurl + "/employees/";
+  	
   	if(appAuthorize.isLoggedIn() == true){
   		$http.get(url)
   		.success(function(data){
@@ -11,6 +14,7 @@ angular.module('lscsClientApp')
   			} else if(data.role == 0){
   				$location.path("/admin");
   			}
+
   		})
   		.error(function(data){
   			console.log('Error' + data);
@@ -21,21 +25,52 @@ angular.module('lscsClientApp')
         $location.path("/checklistCreation");
     };
 
+  	$http.get(url_employee)
+  	.success(function(data){
+  		$scope.EmployeeList = [];
+  		angular.forEach(data, function(item){
+  			if(item.role == 2){
+  				$scope.EmployeeList.push(item);
+  			}
+  		});
+  	})
+  	.error(function(data){
+
+  	});
+
+
+  	$http.get(url_checklist)
+  	.success(function(data){
+  		$scope.CompletedList = [];
+  		$scope.OngoingList = [];
+  		
+  		angular.forEach(data, function(item){
+  			if(item.status == 'C') {
+  				$scope.CompletedList.push(item);
+  			} else {
+  				$scope.OngoingList.push(item);
+  			}
+  		});
+  	})
+  	.error(function(data){
+  		console.log('Error' + data);
+  	});
+
   	$scope.headerTabs = [
             {
                 'headerTabId': 1,
                 'header': 'Ongoing Surveys',
-                'icon': 'fi-clock',
+                'icon': 'glyphicon-time',
             },
             {
                 'headerTabId': 2,
                 'header': 'Completed Surveys',
-                'icon': 'fi-check',
+                'icon': 'glyphicon-ok',
             },
             {
                 'headerTabId': 3,
                 'header': 'Surveyors',
-                'icon': 'fi-torsos-all',
+                'icon': 'glyphicon-user',
             }
         ];
     $scope.selected = 0;
@@ -48,6 +83,25 @@ angular.module('lscsClientApp')
 
 	$scope.items = ['item1', 'item2', 'item3'];
 
+	$scope.open_survey = function (checklist) {
+		var modalInstance = $modal.open({
+		  	templateUrl: 'views/manager-survey-view.html',
+		  	controller: ManagerModalInstanceCtrl,
+		  	size: 'lg',
+		  	resolve: {
+		    items: function () {
+		      return checklist;
+		    }
+		  }
+		});
+
+		modalInstance.result.then(function (selectedItem) {
+		  $scope.selected = selectedItem;
+		}, function () {
+		  $log.info('Modal dismissed at: ' + new Date());
+		});
+	};
+
 	$scope.open = function () {
 
 	var modalInstance = $modal.open({
@@ -59,6 +113,8 @@ angular.module('lscsClientApp')
 	    }
 	  }
 	});
+
+	
 
 	modalInstance.result.then(function (selectedItem) {
 	  $scope.selected = selectedItem;
