@@ -1,6 +1,7 @@
 <div ng-include src="'views/header.html'"></div>
 <hr/>
 <div class="container">
+
   <div align="center" ng-controller="SurveyorCtrl" >
     <table class="table table-hover">
       <tr >
@@ -42,6 +43,11 @@
               Description
             </a>
           </th>
+          <th>
+            <a href="" ng-click="predicate = 'status'; reverse=false">
+              Status
+            </a>
+          </th>
         </tr>
         <tr data-toggle="modal" data-target="#checklistModal" ng-click="openChecklistModal(cl.id)" ng-repeat="cl in cls | orderBy:predicate:reverse">
           <th width="1%">
@@ -67,6 +73,19 @@
           </td>
           <td>
             {{ cl.description }}
+          </td> 
+          <td>
+            <span ng-class="{yellow: cl.status == 'P', green: cl.status =='C'}"> 
+              <span ng-if="cl.status == 'C'">
+                Complete
+              </span>
+              <span ng-if="cl.status == 'P'">
+                Pending
+              </span>
+              <span ng-if="cl.status == 'I'">
+                Initialized
+              </span>
+            </span>
           </td>
         </tr>
       </table>
