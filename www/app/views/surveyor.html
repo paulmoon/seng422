@@ -3,18 +3,21 @@
 <div class="row">
   <div align="center" ng-controller="SurveyorCtrl">
 
-      <table>
-          <tr>
+      <table class="table">
+          <tr >
               <th>
-                  File #
+                  <input type="checkbox" ng-model="itemAll" ng-click="selectAll()"/>
               </th>
-
+              <th>
+                  <a href="" ng-click="predicate = 'title'; reverse=false">
+                    File #
+                  <a/>
+              </th>
               <th>
                   <a href="" ng-click="predicate = 'title'; reverse=false">
                     Title
                   </a>
               </th>
-
               <th>
                   <a href="" ng-click="predicate = 'assigner'; reverse=false">
                     Assigner
@@ -42,6 +45,9 @@
               </th>
           </tr>
           <tr ng-repeat="cl in cls | orderBy:predicate:reverse">
+              <th width="1%">
+                  <input type="checkbox" id="{{ $index }}" ng-model="cl.Selected"/>
+              </td>
               <td>
                   {{ $index }}
               </td>
@@ -65,6 +71,8 @@
               </td>
           </tr>
       </table>
+      <br><br>
+      <button type="button" class="submit checklist" ng-click="submit()">Submit</button>
   </div>
 
 

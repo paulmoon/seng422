@@ -111,18 +111,19 @@ class ChecklistModify(generics.ListCreateAPIView):
 
 
     def post(self, request, *args, **kwargs):
-        if request.user.role != '1':
+        if request.user.role == '0':
             return Response({"error":"Only managers can modify checklists"}, status=status.HTTP_403_FORBIDDEN)
         serializer = ChecklistPostSerializer(data=request.DATA);
         if serializer.is_valid():
             checklist = Checklist.objects.get(pk=kwargs['checklistID'])
-            checklist.title = serializer.data["title"]
-            checklist.description = serializer.data["description"]
+            if request.user.role == '1':
+                checklist.title = serializer.data["title"]
+                checklist.description = serializer.data["description"]
+                checklist.assignee = Employee.objects.get(pk=serializer.data["assignee"])
+                checklist.address = serializer.data["address"]
+                checklist.district = serializer.data["district"]
+                checklist.date=datetime.date.today()
             checklist.json_contents = serializer.data["json_contents"]
-            checklist.assignee = Employee.objects.get(pk=serializer.data["assignee"])
-            checklist.address = serializer.data["address"]
-            checklist.district = serializer.data["district"]
-            checklist.date=datetime.date.today()
             checklist.save()
             return Response('update')
         else:
