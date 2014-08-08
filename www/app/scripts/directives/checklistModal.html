@@ -16,9 +16,9 @@
             <td>{{question}}</td>
             <td>
                 <div>
-                    <input type="radio" value="Unanswered" ng-change="saveAnswer(question, answer)" ng-model="answer">Unanswered</input>
-                    <input type="radio" value="Complete" ng-change="saveAnswer(question, answer)" ng-model="answer">Complete</input>
-                    <input type="radio" value="Incomplete" ng-change="saveAnswer(question, answer)" ng-model="answer">Incomplete</input>
+                    <input style="margin: 3px;" type="radio" value="Unanswered" ng-change="saveAnswer(question, answer)" ng-model="answer">Unanswered</input>
+                    <input style="margin: 3px;" type="radio" value="Complete" ng-change="saveAnswer(question, answer)" ng-model="answer">Complete</input>
+                    <input style="margin: 3px;" type="radio" value="Incomplete" ng-change="saveAnswer(question, answer)" ng-model="answer">Incomplete</input>
                 </div>
               </div>
             </td>
@@ -29,6 +29,9 @@
     <div class="modal-footer">
       <button type="button" ng-click="submitChecklist()"class="btn btn-success">
         Submit
+      </button>
+      <button type="button" ng-click="saveChecklist()"class="btn btn-info">
+        Save Changes
       </button>
       <button type="button" ng-click="cancel()" class="btn btn-default">
         Cancel
