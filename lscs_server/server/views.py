@@ -1,3 +1,5 @@
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponseServerError
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, generics, status
 from rest_framework.authtoken.models import Token
@@ -103,7 +105,7 @@ class ChecklistModify(generics.ListCreateAPIView):
         checklistID = int(kwargs["checklistID"])
         try:
             checklist = Checklist.objects.get(pk=checklistID)
-            serializer = ChecklistSerializer(checklist)
+            serializer = ChecklistGetSerializer(checklist)
             return Response(serializer.data, status.HTTP_200_OK)
         except ObjectDoesNotExist:
             return Response("Checklist with id {} does not exist.".format(
@@ -218,7 +220,6 @@ class ChecklistTemplateView(generics.ListCreateAPIView):
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class ChecklistTemplateUpdateView(generics.UpdateAPIView):
     #TODO: Change for Authenication
     authentication_classes = (TokenAuthentication,)
@@ -258,6 +259,8 @@ class ChecklistTemplateDeactivateView(generics.DestroyAPIView):
     Delete a checklist provided its templateID. In our
     case we just mark the case as deactive.
     '''
+
+
     def delete(self, request, *args, **kwargs):
         template = None
         try:
