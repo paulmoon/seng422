@@ -23,64 +23,80 @@
 
 	<script type="text/ng-template" id="page0">
     	<div class="row">
-    		<h4 class="lscs-manager" style="margin-left: 15px"><span class="lscs-header-icon-sub"><span class="glyphicon glyphicon-list-alt"></span> &nbsp;List of Ongoing Surveys</h4>
+    		<h4 class="lscs-manager" style="margin-left: 15px"><span class="lscs-header-icon-sub"><span class="glyphicon glyphicon-list-alt"></span></span> &nbsp;List of Ongoing Surveys</h4>
     	</div>
     	<div class="row">
-    		<table class="lscs-table-sub lscs-row-button">
-			  <thead>
-			    <tr>
-			      <th width="100">Survey ID</th>
-			      <th width="250">Survey Name</th>
-			      <th width="150">Surveyor</th>
-			      <th width="150">Date</th>
-			      <th width="150">Action</th>
-			    </tr>
-			  </thead>
-			  <tbody>
-			    <tr ng-repeat="ongoing in OngoingList">
-			      <td>{{ongoing.id}}</td>
-			      <td>{{ongoing.title}}</td>
-			      <td>{{ongoing.assigner.first_name}} {{ongoing.assigner.last_name}}</td>
-			      <td>{{ongoing.date}}</td>
-			      <td>buttons</td>
-			    </tr>
-			  </tbody>
-			</table>
+    		<div class="container">
+    			<div class="panel panel-default">
+    				<div class="panel-heading">Ongoing Surveys</div>
+    					<table class="table">
+						  <thead>
+						    <tr>
+						      <th width="100">Survey ID</th>
+						      <th width="250">Survey Name</th>
+						      <th width="150">Surveyor</th>
+						      <th width="150">Date</th>
+						      <th width="150">Action</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr ng-repeat="ongoing in OngoingList">
+						      <td>{{ongoing.id}}</td>
+						      <td>{{ongoing.title}}</td>
+						      <td>{{ongoing.assigner.first_name}} {{ongoing.assigner.last_name}}</td>
+						      <td>{{ongoing.date}}</td>
+						      <td>
+						      	<div class="btn-group">
+								  <button type="button" ng-click="open_survey(ongoing)" class="btn btn-success">View</button>
+								</div>
+						      </td>
+						    </tr>
+						  </tbody>
+						</table>
+				</div>
+			</div>
 			<!-- <div ng-weather></div> -->
 			<!-- <google-map class="lscs-row-button lscs-map" center="map.center" zoom="map.zoom"></google-map> -->
     	</div>
 	</script>
   	<script type="text/ng-template" id="page1">
     	<div class="row">
-    		<h4 class="lscs-manager" style="margin-left: 15px"><span class="lscs-header-icon-sub"><i class="fi-results"></i></span> &nbsp;List of Completed Surveys</h4>
+    		<h4 class="lscs-manager" style="margin-left: 15px"><span class="lscs-header-icon-sub"><span class="glyphicon glyphicon-list-alt"></span></span> &nbsp;List of Completed Surveys</h4>
     	</div>
     	<div class="row">
-    		<table class="lscs-table-sub lscs-row-button">
-			  <thead>
-			    <tr>
-			      <th width="100">Survey ID</th>
-			      <th width="250">Survey Name</th>
-			      <th width="150">Surveyor</th>
-			      <th width="150">Date Completed</th>
-			      <th width="150">Action</th>
-			    </tr>
-			  </thead>
-			  <tbody>
-				    <tr>
-				      <td>{{managerCheckList}}</td>
-				      <td>This is longer content Donec id elit non mi porta gravida at eget metus.</td>
-				      <td>Content Goes Here</td>
-				      <td>Content Goes Here</td>
-				      <td>Content Goes Here</td>
-				    </tr>
-			  </tbody>
-			</table>
-			// <google-map class="lscs-row-button lscs-map" center="map.center" zoom="map.zoom"></google-map>
-    	</div>
+    		<div class="container">
+    			<div class="panel panel-default">
+    				<div class="panel-heading">Completed Surveys</div>
+    					<table class="table">
+						  <thead>
+						    <tr>
+						      <th width="100">Survey ID</th>
+						      <th width="250">Survey Name</th>
+						      <th width="150">Surveyor</th>
+						      <th width="150">Date</th>
+						      <th width="150">Action</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr ng-repeat="completed in CompletedList">
+						      <td>{{completed.id}}</td>
+						      <td>{{completed.title}}</td>
+						      <td>{{completed.assigner.first_name}} {{completed.assigner.last_name}}</td>
+						      <td>{{completed.date}}</td>
+						      <td>
+						      	<div class="btn-group">
+								  <button type="button" ng-click="open_survey(ongoing)" class="btn btn-success">View</button>
+								</div>
+						      </td>
+						    </tr>
+						  </tbody>
+						</table>
+				</div>
+			</div>
   	</script>
   	<script type="text/ng-template" id="page2">
     	<div class="row">
-    		<h4 class="lscs-manager" style="margin-left: 15px"><span class="lscs-header-icon-sub"><i class="fi-results"></i></span> &nbsp;List of Surveyors</h4>
+    		<h4 class="lscs-manager" style="margin-left: 15px"><span class="lscs-header-icon-sub"><span class="glyphicon glyphicon-list-alt"></span></span> &nbsp;List of Surveyors</h4>
     	</div>
     	<div class="row">
     		<table class="lscs-table-sub">
@@ -95,16 +111,6 @@
 			    <tr>
 			      <td>Content Goes Here</td>
 			      <td>This is longer content Donec id elit non mi porta gravida at eget metus.</td>
-			      <td>Content Goes Here</td>
-			    </tr>
-			    <tr>
-			      <td>Content Goes Here</td>
-			      <td>This is longer Content Goes Here Donec id elit non mi porta gravida at eget metus.</td>
-			      <td>Content Goes Here</td>
-			    </tr>
-			    <tr>
-			      <td>Content Goes Here</td>
-			      <td>This is longer Content Goes Here Donec id elit non mi porta gravida at eget metus.</td>
 			      <td>Content Goes Here</td>
 			    </tr>
 			  </tbody>

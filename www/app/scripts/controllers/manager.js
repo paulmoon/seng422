@@ -20,8 +20,15 @@ angular.module('lscsClientApp')
 
   	$http.get(url_checklist)
   	.success(function(data){
-  		$scope.OngoingList = data;
-  		console.log(data);
+  		$scope.CompletedList = [];
+  		$scope.OngoingList = [];
+  		angular.forEach(data, function(item){
+  			if(item.status == 'C') {
+  				$scope.CompletedList.push(item);
+  			} else {
+  				$scope.OngoingList.push(item);
+  			}
+  		});
   	})
   	.error(function(data){
   		console.log('Error' + data);
@@ -54,6 +61,25 @@ angular.module('lscsClientApp')
 
 	$scope.items = ['item1', 'item2', 'item3'];
 
+	$scope.open_survey = function (checklist) {
+		var modalInstance = $modal.open({
+		  	templateUrl: 'views/manager-survey-view.html',
+		  	controller: ManagerModalInstanceCtrl,
+		  	size: 'lg',
+		  	resolve: {
+		    items: function () {
+		      return checklist;
+		    }
+		  }
+		});
+
+		modalInstance.result.then(function (selectedItem) {
+		  $scope.selected = selectedItem;
+		}, function () {
+		  $log.info('Modal dismissed at: ' + new Date());
+		});
+	};
+
 	$scope.open = function () {
 
 	var modalInstance = $modal.open({
@@ -65,6 +91,8 @@ angular.module('lscsClientApp')
 	    }
 	  }
 	});
+
+	
 
 	modalInstance.result.then(function (selectedItem) {
 	  $scope.selected = selectedItem;
