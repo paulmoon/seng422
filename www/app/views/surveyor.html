@@ -44,6 +44,11 @@
                       Description
                     </a>
                 </th>
+                <th>
+                    <a href="" ng-click="predicate = 'status'; reverse=false">
+                      Status
+                    </a>
+                </th>
             </tr>
             <tr ng-repeat="cl in cls | orderBy:predicate:reverse">
                 <th width="1%">
@@ -69,6 +74,19 @@
                 </td>
                 <td>
                     {{ cl.description }}
+                </td>
+                <td>
+                  <span ng-class="{yellow: cl.status == 'P', green: cl.status =='C'}"> 
+                    <span ng-if="cl.status == 'C'">
+                      Complete
+                    </span>
+                    <span ng-if="cl.status == 'P'">
+                      Pending
+                    </span>
+                    <span ng-if="cl.status == 'I'">
+                      Initialized
+                    </span>
+                  </span>
                 </td>
             </tr>
         </table>
