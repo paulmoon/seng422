@@ -278,3 +278,19 @@ class ChecklistStatusChangeView(generics.CreateAPIView):
         checklist.status = request.DATA['status']
         checklist.save();
         return Response("Checklist updated with status " + request.DATA['status'])
+
+class ChecklistDeleteView(generics.DestroyAPIView):
+    permission_classes = (AllowAny,)
+
+    def delete(self, request, *args, **kwargs):
+        checklist = Checklist.objects.get(pk=kwargs['checklistID'])
+        checklist.delete();
+        return Response("Checklist deleted")
+
+class EmployeeSurveyorView(generics.ListAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = EmployeeInfoSerializer
+
+    def get_queryset(self):
+        return Employee.objects.filter(role='2')
+

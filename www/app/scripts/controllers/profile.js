@@ -1,9 +1,17 @@
 'use strict';
 
 angular.module('lscsClientApp')
-  .controller('ProfileCtrl', function ($scope) {
-    $scope.tabs = [
-      { title:'Dynamic Title 1', content:'Dynamic content 1' },
-      { title:'Dynamic Title 2', content:'Dynamic content 2' }
-    ];
+  .controller('ProfileCtrl', function ($scope, appAuthorize, $location, setting, $http) {
+  	var url;
+  	if(appAuthorize.isLoggedIn() == true){
+  		url = setting.apiurl + "/authorize_token/";
+  		$http.get(url)
+  		.success(function(data){
+  			$scope.pd = data;
+  			console.log(data);
+  		})
+  		.error(function(data){
+  			console.log('Error' + data);
+  		});
+  	}
   });

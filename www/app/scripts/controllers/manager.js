@@ -21,6 +21,10 @@ angular.module('lscsClientApp')
   		});
   	}
 
+    $scope.openNewChecklist = function() {
+        $location.path("/checklistCreation");
+    };
+
   	$http.get(url_employee)
   	.success(function(empdata){
   		var employeeCount = 0;
