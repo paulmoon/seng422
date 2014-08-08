@@ -19,13 +19,13 @@
     
     <div class="navbar-collapse collapse" ng-if="loggedIn">
         <div class="btn-group navbar-form navbar-right" dropdown is-open="status.isopen">
-            <button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabled">
+            <button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabled"><span class="glyphicon glyphicon-cog"></span>
                 Settings <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#" ng-click="profile()">Profile</a></li>
+                <li><a ng-href="#/profile">Profile</a></li>
                 <li class="divider"></li>
-                <li><a href="#" ng-click="logout()">Sign out</a></li>
+                <li  ng-click="logout()"><a href="#" >Sign out</a></li>
             </ul>
         </div>
     </div>
