@@ -119,6 +119,25 @@ angular.module('lscsClientApp')
 		});
 	};
 
+	$scope.open_location = function (checklist) {
+		var modalInstance = $modal.open({
+		  	templateUrl: 'views/manager-location-modal.html',
+		  	controller: ManagerLocationModalInstanceCtrl,
+		  	size: 'lg',
+		  	resolve: {
+		    items: function () {
+		      return checklist;
+		    }
+		  }
+		});
+
+		modalInstance.result.then(function (selectedItem) {
+		  $scope.selected = selectedItem;
+		}, function () {
+		  $log.info('Modal dismissed at: ' + new Date());
+		});
+	}
+
 	$scope.open = function () {
 
 	var modalInstance = $modal.open({
@@ -144,14 +163,14 @@ angular.module('lscsClientApp')
 	return {
 		link: function(scope, element, attributes){
 		$.simpleWeather({
-	    location: 'Austin, TX',
+	    location: 'Toront, ON',
 	    woeid: '',
 	    unit: 'f',
 	    success: function(weather) {
 	      var html = '<h2><i class="icon-'+weather.code+'"></i> '+weather.temp+'&deg;'+weather.units.temp+'</h2>';
-	      // html += '<ul><li>'+weather.city+', '+weather.region+'</li>';
-	      // html += '<li class="currently">'+weather.currently+'</li>';
-	      // html += '<li>'+weather.wind.direction+' '+weather.wind.speed+' '+weather.units.speed+'</li></ul>';
+	      html += '<ul><li>'+weather.city+', '+weather.region+'</li>';
+	      html += '<li class="currently">'+weather.currently+'</li>';
+	      html += '<li>'+weather.wind.direction+' '+weather.wind.speed+' '+weather.units.speed+'</li></ul>';
 	  
 	      angular.element("#weather").html(html);
 	      console.log(weather);
