@@ -4,6 +4,8 @@ angular.module('lscsClientApp')
   .controller('ManagerCtrl', function ($scope, appAuthorize, $location, setting, $http, $modal, $log) {
   	var url = setting.apiurl + "/authorize_token/";
   	var url_checklist = setting.apiurl + "/checklist/";
+  	var url_employee = setting.apiurl + "/employees/";
+  	
   	if(appAuthorize.isLoggedIn() == true){
   		$http.get(url)
   		.success(function(data){
@@ -12,16 +14,32 @@ angular.module('lscsClientApp')
   			} else if(data.role == 0){
   				$location.path("/admin");
   			}
+
   		})
   		.error(function(data){
   			console.log('Error' + data);
   		});
   	}
 
+  	$http.get(url_employee)
+  	.success(function(data){
+  		$scope.EmployeeList = [];
+  		angular.forEach(data, function(item){
+  			if(item.role == 2){
+  				$scope.EmployeeList.push(item);
+  			}
+  		});
+  	})
+  	.error(function(data){
+
+  	});
+
+
   	$http.get(url_checklist)
   	.success(function(data){
   		$scope.CompletedList = [];
   		$scope.OngoingList = [];
+  		
   		angular.forEach(data, function(item){
   			if(item.status == 'C') {
   				$scope.CompletedList.push(item);

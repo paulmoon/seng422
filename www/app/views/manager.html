@@ -23,12 +23,12 @@
 
 	<script type="text/ng-template" id="page0">
     	<div class="row">
-    		<h4 class="lscs-manager" style="margin-left: 15px"><span class="lscs-header-icon-sub"><span class="glyphicon glyphicon-list-alt"></span></span> &nbsp;List of Ongoing Surveys</h4>
+    		<h4 class="lscs-manager" style="margin-left: 15px"><span class="lscs-header-icon-sub"><span class="glyphicon glyphicon-list-alt"></span></span> &nbsp;List of Ongoing Checklist</h4>
     	</div>
     	<div class="row">
     		<div class="container">
     			<div class="panel panel-default">
-    				<div class="panel-heading">Ongoing Surveys</div>
+    				<div class="panel-heading">Ongoing Checklist</div>
     					<table class="table">
 						  <thead>
 						    <tr>
@@ -66,7 +66,7 @@
     	<div class="row">
     		<div class="container">
     			<div class="panel panel-default">
-    				<div class="panel-heading">Completed Surveys</div>
+    				<div class="panel-heading">Completed Checklist</div>
     					<table class="table">
 						  <thead>
 						    <tr>
@@ -99,23 +99,27 @@
     		<h4 class="lscs-manager" style="margin-left: 15px"><span class="lscs-header-icon-sub"><span class="glyphicon glyphicon-list-alt"></span></span> &nbsp;List of Surveyors</h4>
     	</div>
     	<div class="row">
-    		<table class="lscs-table-sub">
-			  <thead>
-			    <tr>
-			      <th width="200">User ID</th>
-			      <th>Surveyor Name</th>
-			      <th width="200">Surveyor Username</th>
-			    </tr>
-			  </thead>
-			  <tbody>
-			    <tr>
-			      <td>Content Goes Here</td>
-			      <td>This is longer content Donec id elit non mi porta gravida at eget metus.</td>
-			      <td>Content Goes Here</td>
-			    </tr>
-			  </tbody>
-			</table>
-    	</div>
+    		<div class="container">
+    			<div class="panel panel-default">
+    				<div class="panel-heading">Employee List</div>
+    					<table class="table">
+						  <thead>
+						    <tr>
+						      <th width="200">User ID</th>
+						      <th>Surveyor Name</th>
+						      <th width="200">Surveyor Username</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr ng-repeat="employee in EmployeeList">
+						      <td>{{employee.id}}</td>
+						      <td>{{employee.first_name}} {{employee.last_name}}</td>
+						      <td>{{employee.username}}</td>
+						    </tr>
+						  </tbody>
+						</table>
+				</div>
+			</div>
   	</script>
 </div>
 
