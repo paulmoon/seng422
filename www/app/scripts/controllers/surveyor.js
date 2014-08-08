@@ -42,23 +42,7 @@ angular.module('lscsClientApp')
               temp = $scope.cls[i];
               temp.assignee = temp.assignee.id
               temp.assigner = temp.assigner.id
-              console.log($scope.cls[i]);
-              // temp = {
-              //         "title":"ggchecklist2",
-              //         "description":"is a god damn ggchecklist2",
-              //         "json_contents":"checklist item",
-              //         "assignee":"2",
-              //         "address":"somewhere over the rainbow",
-              //         "district":"14",
-              //         "template":"1"
-              //         };
               $http.post(cl_num_url, temp)
-              // .success(function(data[i]){
-              //   console.log(data);
-              // })        
-              // .error(function(data[i]){
-              //   console.log('Error' + data);
-              // });
             }
           };
         };

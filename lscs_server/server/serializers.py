@@ -38,14 +38,14 @@ class EmployeeInfoSerializer(serializers.ModelSerializer):
 class ChecklistPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = server.models.Checklist
-        fields = ('id', 'assignee', 'assigner', 'title', 'description', 'district', 'address', 'json_contents', 'template')
+        fields = ('id', 'assignee', 'assigner', 'title', 'description', 'district', 'address', 'json_contents', 'template', 'status')
 
 class ChecklistGetSerializer(serializers.ModelSerializer):
     assignee = EmployeeInfoSerializer()
     assigner = EmployeeInfoSerializer()
     class Meta:
         model = server.models.Checklist
-        fields = ('id', 'assignee', 'assigner', 'title', 'description', 'district', 'address', 'json_contents', 'template', 'date')
+        fields = ('id', 'assignee', 'assigner', 'title', 'description', 'district', 'address', 'json_contents', 'template', 'date', 'status')
 
 class ChecklistTemplateSerializer(serializers.ModelSerializer):
     class Meta:

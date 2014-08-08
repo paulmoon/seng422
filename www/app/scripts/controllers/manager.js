@@ -3,6 +3,7 @@
 angular.module('lscsClientApp')
   .controller('ManagerCtrl', function ($scope, appAuthorize, $location, setting, $http, $modal, $log) {
   	var url = setting.apiurl + "/authorize_token/";
+  	var url_checklist = setting.apiurl + "/checklist/";
   	if(appAuthorize.isLoggedIn() == true){
   		$http.get(url)
   		.success(function(data){
@@ -16,21 +17,31 @@ angular.module('lscsClientApp')
   			console.log('Error' + data);
   		});
   	}
+
+  	$http.get(url_checklist)
+  	.success(function(data){
+  		$scope.OngoingList = data;
+  		console.log(data);
+  	})
+  	.error(function(data){
+  		console.log('Error' + data);
+  	});
+
   	$scope.headerTabs = [
             {
                 'headerTabId': 1,
                 'header': 'Ongoing Surveys',
-                'icon': 'fi-clock',
+                'icon': 'glyphicon-time',
             },
             {
                 'headerTabId': 2,
                 'header': 'Completed Surveys',
-                'icon': 'fi-check',
+                'icon': 'glyphicon-ok',
             },
             {
                 'headerTabId': 3,
                 'header': 'Surveyors',
-                'icon': 'fi-torsos-all',
+                'icon': 'glyphicon-user',
             }
         ];
     $scope.selected = 0;

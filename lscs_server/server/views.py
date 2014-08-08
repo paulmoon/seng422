@@ -271,3 +271,10 @@ class ChecklistTemplateDeactivateView(generics.DestroyAPIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class ChecklistStatusChangeView(generics.CreateAPIView):
+    permission_classes = (AllowAny,)
+    def post(self, request, *args, **kwargs):
+        checklist = Checklist.objects.get(pk=kwargs['checklistID'])
+        checklist.status = request.DATA['status']
+        checklist.save();
+        return Response("Checklist updated with status " + request.DATA['status'])
