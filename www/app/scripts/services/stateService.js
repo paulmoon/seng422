@@ -1,6 +1,6 @@
 'use strict';
 
-angular
+angular.module('lscsClientApp')
   .service('stateService', function ($cookieStore, $http, $location, setting) {
         
 

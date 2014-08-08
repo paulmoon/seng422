@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{items.title}} Weather and Location</h3>
+</div>
+<div class="modal-body">
+	<div ng-weather></div>
+	<center>
+		<map zoom="11" center="[Toronto, ON]">
+			<marker position="[Toronto, ON]" title="Toronto, ON" animation="Animation.BOUNCE"></marker>
+		</map>
+	</center>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

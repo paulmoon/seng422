@@ -165,22 +165,23 @@ class ChecklistView(generics.ListCreateAPIView):
         if request.user.role != '1':
             return Response({"error":"Only managers can create new checklists"}, status=status.HTTP_403_FORBIDDEN)
         serializer = ChecklistPostSerializer(data=request.DATA)
-        if serializer.is_valid():
-            checklist = Checklist.objects.create(
-                    title=serializer.data["title"],
-                    description=serializer.data["description"],
-                    json_contents=serializer.data["json_contents"],
-                    template=ChecklistTemplate.objects.get(pk=serializer.data["template"]),
-                    assignee=Employee.objects.get(pk=serializer.data["assignee"]),
-                    assigner=request.user,
-                    address=serializer.data["address"],
-                    district=serializer.data["district"],
-                    date=datetime.date.today()
-                )
-            checklist.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-          return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        #if serializer.is_valid():
+        print serializer.data;
+        checklist = Checklist.objects.create(
+                title=serializer.init_data["title"],
+                description=serializer.init_data["description"],
+                json_contents=serializer.init_data["json_contents"],
+                template=ChecklistTemplate.objects.get(id=1),
+                assignee=Employee.objects.get(id=serializer.init_data["assignee"]),
+                assigner=request.user,
+                address=serializer.init_data["address"],
+                district=serializer.init_data["district"],
+                date=datetime.date.today()
+            )
+        checklist.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        #else:
+         # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ChecklistTemplateView(generics.ListCreateAPIView):
@@ -278,3 +279,19 @@ class ChecklistStatusChangeView(generics.CreateAPIView):
         checklist.status = request.DATA['status']
         checklist.save();
         return Response("Checklist updated with status " + request.DATA['status'])
+
+class ChecklistDeleteView(generics.DestroyAPIView):
+    permission_classes = (AllowAny,)
+
+    def delete(self, request, *args, **kwargs):
+        checklist = Checklist.objects.get(pk=kwargs['checklistID'])
+        checklist.delete();
+        return Response("Checklist deleted")
+
+class EmployeeSurveyorView(generics.ListAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = EmployeeInfoSerializer
+
+    def get_queryset(self):
+        return Employee.objects.filter(role='2')
+

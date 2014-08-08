@@ -12,7 +12,7 @@ angular.module('lscsClientApp')
       .success(function(data){
         if (data.role == 0 && $location.path() != '/profile') {
           $location.path("/admin");
-        } else if (data.role == 1 && $location.path() != '/profile') {
+        } else if (data.role == 1 && $location.path() != '/profile' && $location.path() != '/checklistCreation') {
           $location.path("/manager");
         } else if (data.role == 2 && $location.path() != '/profile') {
           $location.path("/surveyor");
